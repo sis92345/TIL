@@ -9,6 +9,6 @@ TIL
 
 ### 2. Java  
 ---------------
-> 2. [Interface](https://github.com/sis92345/TIL/blob/master/Java/Implement.md)
+> 2. [Interface](https://github.com/sis92345/TIL/blob/master/Java/Interface.md)
 ### 3. ETC  
 ---------------
