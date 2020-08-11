@@ -15,11 +15,11 @@ Interface
         }
     }
     ```
-
+- __Interface와 추상 메소드의 선택__: 인터페이스는 멤버 메소드를 가질 수 없으므로 멤버 메소드가 있어야 할 경우는 인터페이스가 아닌 추상메소드를 사용한다.
    
 ### 2. implement의 활용
 ---------------
-#### 2.1 Comparable
+#### 2.1 Comparable<t>
 ---------------
 -  __Comparable<t>__: 객체를 정렬하는데 사용되는 compareTo()를 정의한다.
     + Comparable이 있는 클래스는 객체간 정렬이 가능하다.
@@ -45,11 +45,13 @@ Interface
     + compareTo 재정의: 
         + 만약 두 값을 비교해서 인자로 넘어온 객체가 더 작을 경우 음수를/ 동일하다면 0을/ 크다면 양수를 리턴한다.
         + 아래는 player의 name을 비교해서 이름을 정렬해주는 오버라이딩 메소드이다.
-        ```java
+
+       ```
         public int compareTo(player o) {
 		return this.name.compareTo(o.name);
-	}
-        ```
+        }
+       ```
+       
         + 이 경우 메소드의 메커니즘은 다음과 같다.
             + if 반환값이 0이라면 this.name과 name의 인자는 같다.
 	        + if 반환값이 음수라면 compareTo를 호출하는 객체가 더 앞선다: 오름차순 
