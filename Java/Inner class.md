@@ -34,6 +34,7 @@ Inner class
         - 즉 static은 member를 참조할 수 없는 것(변수의 경우와 같다.) 
     + private, protected 접근자는 외부 클래스에서 사용할 수 없다.
     + static class는 내부 클래스에서만 사용한다. 
+    + 이중 캡슐화: 보안
    ```java
    static class staticInner{ 
 		public void display() {

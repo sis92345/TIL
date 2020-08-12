@@ -9,6 +9,7 @@ TIL
 
 ### 2. Java  
 ---------------
-> 2. [Interface](https://github.com/sis92345/TIL/blob/master/Java/Interface.md)
+> 1. [Interface](https://github.com/sis92345/TIL/blob/master/Java/Interface.md)
+> 2. [Innerclass](https://github.com/sis92345/TIL/blob/master/Java/Inner%20class.md)
 ### 3. ETC  
 ---------------
