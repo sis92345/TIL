@@ -13,6 +13,7 @@ TIL
 > 1. [Interface](https://github.com/sis92345/TIL/blob/master/Java/Interface.md)
 > 2. [Innerclass](https://github.com/sis92345/TIL/blob/master/Java/Inner%20class.md)
 > 3. [Literal & Variable & Constant](https://github.com/sis92345/TIL/blob/master/Java/literal%20%26%20variable.md)
+> 4. [Casting](https://github.com/sis92345/TIL/blob/master/Java/Casting.md)
 > ### 3. ETC  
 ---------------
 > 1. [자바에서 문자열을 파싱하는 3가지 방법](https://github.com/sis92345/TIL/blob/master/ETC/ParsingInJava.md)
