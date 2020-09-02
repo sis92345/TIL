@@ -106,8 +106,8 @@ Casting(형변환)
       public class ReferenceCasting {
       	public static void main(String[] args) {
       	// 참조형 자동형변환
-      	// Rolls_Royce는 car의 자식 클래스이므로 부모 클래스인 car로 자동 형변화이 가능하다.
-      	Car car = new Rolls_Royce(); //--> Driver와 Car은 상속 관계가 아니므로 형변환이 불가능하다.
+      	// Rolls_Royce는 car의 자식 클래스이므로 부모 클래스인 car로 자동 형변환이 가능하다.
+      	Car car = new Rolls_Royce(); 
       	
       	// 자동 형변환 시 원칙
       	// 생성된 인스턴스는 Rolls_Royce이지만 선언은 Car이므로 
@@ -116,7 +116,7 @@ Casting(형변환)
       	
       	//1. 참조형의 형변환의 경우 부모 클래스의 변수와 메소드로 제한한다. --> 자식 클래스의 일반 메소드를 사용할 수 없다.
       	car.getUmbrella(String s);//컴파일 오류 --> 자식 클래스의 일반 메소드를 사용할 수 없다.
-      	//2. 자식 클래스에서 오버라디잉된 메소드를 참고한다. 
+      	//2. 자식 클래스에서 오버라이딩된 메소드를 참고한다. 
       	car.getName(); //자식 클래스에서 재정의된 getName()를 사용한다.
       	}
       }
@@ -174,6 +174,7 @@ Casting(형변환)
       	Car carDriver = new Driver("AN");   //Driver로 자동형변환한 Car
       	
       	//1. Rolls_Royce의 참조변수 rr은 Car로 형변환이 가능한지 판단: Rolls_Royce는 Car의 자식 클래스이므로 자동형변환이 가능
+           // <참조변수> instanceof <형변환 할 클래스의 이름>
       	if(rr instanceof Car) {
       		System.out.println("형변환이 가능합니다.");
       	}
@@ -229,29 +230,29 @@ Casting(형변환)
       		System.err.println("저는 " + this.name + " 입니다." );
       	}
       }
-      ```
-
-      - 결과
-
+  ```
+    
+  - 결과
+    
         ```java
         형변환이 가능합니다.
         형변환이 불가능 합니다.
         형변환이 가능합니다.
         이 자동차는 롤스로이스 입니다.
-        ```
-
-        
-
-      
-
-      
-
-    - **Instanceof**
-
-      - 사용
-
-        - 부모형을 자식형으로 강제형변환이 가능하다는 것을 true/false로 반환한다. 
-
+    ```
+    
+    
+    
+  
+    
+  
+    
+- **Instanceof**
+    
+  - 사용
+    
+    - 부모형을 자식형으로 강제형변환이 가능하다는 것을 true/false로 반환한다. 
+    
           ```java
           
           public class InstanceOfDemo {
@@ -275,10 +276,10 @@ Casting(형변환)
           }
           class A{}
           class B extends A{}
-          ```
-
-        - 객체의 원형을 뽑아내기 위해서 사용한다.(부모형의 참조변수로 자식 클래스의 원형을 알고자 할 때 사용한다.)
-
+      ```
+    
+    - 객체의 원형을 뽑아내기 위해서 사용한다.(부모형의 참조변수로 자식 클래스의 원형을 알고자 할 때 사용한다.)
+    
           ```java
           
           public class InstanceOfDemo {
@@ -305,24 +306,24 @@ Casting(형변환)
           class English extends Language{}
           class Deutsch extends Language{}
           class Franch extends Language{}
-          ```
-
-          - 결과
-
+      ```
+    
+      - 결과
+    
             ```java
             len은 Franch 
-            ```
-
-            
-
-      
-
-    - 결과
-
-      
-
-      
-
+        ```
+    
+        
+    
+  
+    
+- 결과
+    
+  
+    
+  
     
 
+    
     

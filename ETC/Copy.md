@@ -78,120 +78,184 @@ Copy
 
     
 
-### 2  예제로 살펴보기
----------------
-- ㄴㅇ
+### 2. 배열의 값복사, 주소복사
 
-  ```java
-  import java.util.Collections;
-  import java.util.Scanner;
-  import java.util.Vector;
-  
-  public class Test {
-  
-  	public static void main(String[] args) {
-  		Scanner sc = new Scanner(System.in);
-  		Vector<Student> vec = new Vector(1,1);
-  		Vector<Integer> input = new Vector(1,1);
-  		while(true) {
-  			System.out.println("당신의 성적은?(-1 입력하면 종료)");
-  			int grade = sc.nextInt();	
-  			if(grade <= -1) break;
-  			vec.add(new Student(grade));
-  			input.add(grade);
-  			
-  		}
-  		//input = vec;값복사 --> 이렇게 작성하면 입력순서가 정렬된채로 나온다. 
-          //input의 참조 주소가 정렬된 vec로 바뀌기 때문 
-  		input = (Vector<Integer>) vec.clone(); //값복사: clone() 메소드로 값복사를 행한다.
-  		Collections.sort(vec);
-  		int i=1;
-  		for(Student s: vec){ //정렬 출력
-  			System.out.print((i++) + " 등의 성적은");
-  			System.out.println(s);
-  		}
-  		System.out.println("================입력 순서==============");
-  		for(int i1=0;i1<input.size();i1++) { //입력값 출력
-  			System.out.println(input.elementAt(i1));
-  		}
-  	}
-  }
-  class Student implements Comparable<Student>{
-  	int grade;
-  	public Student(int grade) {
-  		this.grade = grade;
-  	}
-  	@Override
-  	public int compareTo(Student o) {
-  		if(this.grade < o.grade) return 1;
-  		else if(this.grade > o.grade) return -1;
-  		else return 0;
-  	}
-  	@Override
-  	public String toString() {
-  		return "[" + grade + "]";
-  	}
-  }
-  ```
+------
 
-  - 결과
+- **배열의 값복사**: `System.arraycopy(Object sec, int secPos, Object dest, int destPos, int length)`를 이용
 
-    ```java
-    당신의 성적은?(-1 입력하면 종료)
-    54
-    당신의 성적은?(-1 입력하면 종료)
-    78
-    당신의 성적은?(-1 입력하면 종료)
-    96
-    당신의 성적은?(-1 입력하면 종료)
-    23
-    당신의 성적은?(-1 입력하면 종료)
-    0
-    당신의 성적은?(-1 입력하면 종료)
-    45
-    당신의 성적은?(-1 입력하면 종료)
-    10
-    당신의 성적은?(-1 입력하면 종료)
-    5
-    당신의 성적은?(-1 입력하면 종료)
-    87
-    당신의 성적은?(-1 입력하면 종료)
-    74
-    당신의 성적은?(-1 입력하면 종료)
-    65
-    당신의 성적은?(-1 입력하면 종료)
-    36
-    당신의 성적은?(-1 입력하면 종료)
-    69
-    당신의 성적은?(-1 입력하면 종료)
-    -1
-    1 등의 성적은[96]
-    2 등의 성적은[87]
-    3 등의 성적은[78]
-    4 등의 성적은[74]
-    5 등의 성적은[69]
-    6 등의 성적은[65]
-    7 등의 성적은[54]
-    8 등의 성적은[45]
-    9 등의 성적은[36]
-    10 등의 성적은[23]
-    11 등의 성적은[10]
-    12 등의 성적은[5]
-    13 등의 성적은[0]
-    ================입력 순서==============
-    [54]
-    [78]
-    [96]
-    [23]
-    [0]
-    [45]
-    [10]
-    [5]
-    [87]
-    [74]
-    [65]
-    [36]
-    [69]
+  -  System.arraycopy() 설명
+
+    ```
+    Object sec: 복사하고자 하는 원본 배열
+    int secPos: 원본 배열에서 복사를 시작하고자 하는 위치
+    Object dest: 카피 배열
+    int destPos: 카피 배열에서 카피를 시작하고자 하는 위치
+    int length: 원본에서 복사본으로 데이터를 읽어서 쓸 데이터 길이
     ```
 
-    
+    - 예
+
+      ```java
+      import java.util.Scanner;
+      public class asd{
+      	public static void main(String[] args) {
+      	String[] a = {"java", "python", "C++", "Node.js"};
+      	String[] b = new String[6];
+          // a배열의 a[0]부터 복사를 시작해서 3번째까지 c배열에 복사하되 c[1]부터 복사
+      	System.arraycopy(a, 0, c, 1, 3);
+      	}
+      }
+      ```
+
+    - 결과
+
+      ```java
+      null
+      java //a[0] 카피
+      python //a[1] 카피
+      C++ //a[2] 카피
+      null
+      null
+      ```
+
+- 배열의 주소복사: 카피 배열에 원 배열의 주소를 복사하면 된다.
+
+  ```java
+  import java.util.Scanner;
+  public class asd{
+  	public static void main(String[] args) {
+          String[] a = {"java", "python", "C++", "Node.js"};
+          String[] b;
+          //주소복사
+          b = a;
+          for(int i=0;i<b.length;i++) {
+              System.out.println(b[i]);
+          }	
+  	}
+  }
+  
+  ```
+
+  
+
+  
+
+### 3. 예제로 살펴보기
+
+---------------
+
+
+```java
+import java.util.Collections;
+import java.util.Scanner;
+import java.util.Vector;
+
+public class Test {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		Vector<Student> vec = new Vector(1,1);
+		Vector<Integer> input = new Vector(1,1);
+		while(true) {
+			System.out.println("당신의 성적은?(-1 입력하면 종료)");
+			int grade = sc.nextInt();	
+			if(grade <= -1) break;
+			vec.add(new Student(grade));
+			input.add(grade);
+			
+		}
+		//input = vec;값복사 --> 이렇게 작성하면 입력순서가 정렬된채로 나온다. 
+        //input의 참조 주소가 정렬된 vec로 바뀌기 때문 
+		input = (Vector<Integer>) vec.clone(); //값복사: clone() 메소드로 값복사를 행한다.
+		Collections.sort(vec);
+		int i=1;
+		for(Student s: vec){ //정렬 출력
+			System.out.print((i++) + " 등의 성적은");
+			System.out.println(s);
+		}
+		System.out.println("================입력 순서==============");
+		for(int i1=0;i1<input.size();i1++) { //입력값 출력
+			System.out.println(input.elementAt(i1));
+		}
+	}
+}
+class Student implements Comparable<Student>{
+	int grade;
+	public Student(int grade) {
+		this.grade = grade;
+	}
+	@Override
+	public int compareTo(Student o) {
+		if(this.grade < o.grade) return 1;
+		else if(this.grade > o.grade) return -1;
+		else return 0;
+	}
+	@Override
+	public String toString() {
+		return "[" + grade + "]";
+	}
+}
+```
+
+- 결과
+
+  ```java
+  당신의 성적은?(-1 입력하면 종료)
+  54
+  당신의 성적은?(-1 입력하면 종료)
+  78
+  당신의 성적은?(-1 입력하면 종료)
+  96
+  당신의 성적은?(-1 입력하면 종료)
+  23
+  당신의 성적은?(-1 입력하면 종료)
+  0
+  당신의 성적은?(-1 입력하면 종료)
+  45
+  당신의 성적은?(-1 입력하면 종료)
+  10
+  당신의 성적은?(-1 입력하면 종료)
+  5
+  당신의 성적은?(-1 입력하면 종료)
+  87
+  당신의 성적은?(-1 입력하면 종료)
+  74
+  당신의 성적은?(-1 입력하면 종료)
+  65
+  당신의 성적은?(-1 입력하면 종료)
+  36
+  당신의 성적은?(-1 입력하면 종료)
+  69
+  당신의 성적은?(-1 입력하면 종료)
+  -1
+  1 등의 성적은[96]
+  2 등의 성적은[87]
+  3 등의 성적은[78]
+  4 등의 성적은[74]
+  5 등의 성적은[69]
+  6 등의 성적은[65]
+  7 등의 성적은[54]
+  8 등의 성적은[45]
+  9 등의 성적은[36]
+  10 등의 성적은[23]
+  11 등의 성적은[10]
+  12 등의 성적은[5]
+  13 등의 성적은[0]
+  ================입력 순서==============
+  [54]
+  [78]
+  [96]
+  [23]
+  [0]
+  [45]
+  [10]
+  [5]
+  [87]
+  [74]
+  [65]
+  [36]
+  [69]
+  ```
+
+  
