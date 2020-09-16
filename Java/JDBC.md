@@ -4,10 +4,12 @@ JDBC
 > JDBC의 개념
 >
 > JDBC 순서
+>
+> JDBC API
 
 > JDBC 활용
 
-### 1. 배열의 개념
+### 1. JDBC의 개념
 
 ---------------
 
@@ -128,7 +130,136 @@ JDBC
   - 파라메터에는 오라클 컬럼 인덱스(1부터 시작)이나 컬럼 이름을 사용해서 해당하는 컬럼의 값을 추출한다.
     - `sal * 1.1`*처럼 컬럼의 이름이 특정 이름을 가지고 있지 않을 경우 컬럼 인덱스를 넣거나 별창을 사용할 수 있다.*
 
-### 3. JDBC 활용
+### 3. JDBC API: PreparedStatement
+
+------
+
+- **PreparedStatement**
+
+  - **PreparedStatement와 Statement의 차이**
+
+    - 일반적인 SQL Engine의 과정은 다음과 같다.
+      1. *Syntax Check*
+         - `SELECT job FROM emp;`에서 틀린 문장이 있는가?
+      2. *Object Check*
+         - `SELECT job FROM emp;`에서 emp가 실제로 존재하는가? job 컬럼이 실제로 존재하는가?
+      3. *Run*
+    - Statementsms는 위 3단계를 모두 수행한다.
+    - PreparedStatement는 처음 한 번만 세 단계를 거친 후 캐시에 담아 재사용을 한다.
+    - 만약 동일한 쿼리를 반복적으로 사용한다면 PreparedStatement가 DB에 훨씬 적은 부하를 주며, 성능도 더 좋다.
+    - Statement는 중간에 변수를 사용해야 할 경우 SQL문법처럼 ' '로 둘러쌓여야 한다.
+      - 즉 `String sql = "SELECT * FROM emp WHERE ename '" + this.name + "'" ;`
+    - 하지만 **PreparedStatement는 ?를 사용**하므로 그럴필요가 없다.
+      - 즉 `String sql = "SELECT * FROM emp WHERE ename = UPPER(?);`
+        - 이를 *불완전  SQL*이라고 하며 `PreparedStatement setInt(int p, String x)`같은 것으로 *완전 SQL문*을 만들어야 한다.
+
+  - **PreparedStatement와 Statement의 선언 차이**
+
+    - Statement
+
+      ```java
+      String sql = "SELECT empno, dname" +
+      			"FROM emp INNER JOIN dept ON emp.deptno = dept.deptno" +
+      			"WHERE ename = '" + name + "'";
+      Statement stmt = conn.createStatement();
+      ResultSet rs = stmt.executeQuery(sql); //Statement는 executeQuery(sql)에 SQL문을 파라메터로 전달
+      ```
+
+      - Statement는 executeQuery(sql)가 실행될 때 SQL문을 전달한다. 이때 SQL문은 반드시 완성된 상태여야 한다. 
+      - Statement는 SQL문을 수행하는 과정에서 매 번 컴파일을 하므로 성능상의 문제가 존재한다.
+
+    - **PreparedStatement**
+
+      ```java
+      	String sql = " SELECT deptno, dname, loc " +
+      				 " FROM dept" +
+      				 " WHERE deptno = ? OR dname = UPPER(?)"; //불완전 SQL문
+      	PreparedStatement pstmt = conn.prepareStatement(sql); //PreparedStatement가 SQL문을 입력하는 순간
+      	//PreparedStatement는 불완전 SQL문을 완전한 SQL문으로 만들어야 한다.
+      	System.out.println("검색할 부서의 번호");
+      	int deptno = sc.nextInt();
+      	pstmt.setInt(1, deptno);
+      	System.out.println("검색할 부서의 이름");
+      	String dname = sc.next();
+      	pstmt.setString(2, dname);
+      .
+      .
+      .
+         ResultSet rs = pstmt.executeQuery();//PreparedStatement는 executeQuery()를 빈칸으로 둔다.
+      ```
+
+      - **PreparedStatement**는 Statement에 비해 성능성의 이점이 있다. 
+      - `?`이 포함된 SQL문은 불완전 SQL문이다. 이 문장도 쿼리 문장 분석 -> 객체 체크을 한다. 
+      - <u>**PreparedStatement**는 `?` 부분에만 계속 변환을 주어 지속적으로 SQL문을 수행할 수 있다.</u>
+
+    - **PreparedStatement의 선언 순서**
+
+      1.  불완전 SQL문 작성
+         - `?`을 포함한 문장을 말한다.
+      2. Connection prepareStatement(sql)로 prepareStatement 인스턴스 생성
+      3. 완전 SQL문을 작성: set~~~을 이용
+         - pstmt.setInt(int parameterIndex, String x)
+           - int parameterIndex: 불완전 SQL문의 `?`인덱스 --> 1부터 시작
+         - pstmt.setString(int parameterIndex, String x)
+         - 그 외 등등...
+      4. ResultSet 인스턴스 생성
+         - `ResultSet rs = pstmt.executeQuery()`
+           - 주의점: **PreparedStatement**는 executeQuery() 파라메터에 인자를 넣지 않는다.
+      5. 이후 과정은 동일
+
+    - PreparedStatement 예
+
+      ```java
+      package Run;
+      
+      import java.util.Scanner;
+      import java.sql.*;
+      import co.example.libs.*;
+      
+      public class asd {
+      	public static void main(String[] args) throws SQLException {
+      	Scanner sc = new Scanner(System.in);
+      	//2,3
+      	DBConnection dbconn = new DBConnection();
+      	Connection conn = dbconn.getConnetion();
+      	
+      	//4. PreparedStatement
+      	String sql = " SELECT deptno, dname, loc " +
+      				 " FROM dept" +
+      				 " WHERE deptno = ? OR dname = UPPER(?)"; //불완전 SQL문
+      	PreparedStatement pstmt = conn.prepareStatement(sql); //PreparedStatement가 SQL문을 입력하는 순간
+      	//PreparedStatement는 불완전 SQL문을 완전한 SQL문으로 만들어야 한다.
+      	System.out.println("검색할 부서의 번호");
+      	int deptno = sc.nextInt();
+      	pstmt.setInt(1, deptno);
+      	System.out.println("검색할 부서의 이름");
+      	String dname = sc.next();
+      	pstmt.setString(2, dname);
+      	
+      	
+      	//5 
+      	ResultSet rs = pstmt.executeQuery();//PreparedStatement는 executeQuery()를 빈칸으로 둔다.
+      	//6.
+      //	if(flag) {
+      		while(rs.next()) {
+      			String deptno1 = rs.getString(1);
+      			String two = rs.getString(2);
+      			String loc = rs.getString(3);
+      			System.out.println(deptno1 + "\t" + two + "\t" + loc);
+      		//}
+      	//} else {
+      	//	System.out.println("대상이 없습니다.");
+      	}
+      	//7.
+      	DBClose.close(conn, pstmt, rs);
+      	}
+      }
+      
+      ```
+
+      
+
+### 4 JDBC 활용
 
 ------
 
@@ -230,6 +361,7 @@ JDBC
      package co.example.libs;
      //1
      import java.sql.Connection;
+     import java.sql.PreparedStatement;
      import java.sql.ResultSet;
      import java.sql.ResultSetMetaData;
      import java.sql.SQLException;
@@ -244,49 +376,50 @@ JDBC
      	public void runJDBC() {
      		//2,3
      		DBConnection dbconn = new DBConnection();
-     		System.out.println("aa1");
      		Connection conn = dbconn.getConnetion();
-     		//4 stmt
+     		//4 pstmt
      		JDBC jdbc = new JDBC();
-     		System.out.println("aa22");
-     		Statement stmt = jdbc.getStatement(conn);
+     		String sql = jdbc.enterSql();
+     		Statement stmt = jdbc.getStatement(conn);	
      		//5.executeQuery
-     		System.out.println("aa333");
-     		ResultSet rs = jdbc.executeQuery(stmt);
+     		ResultSet rs = jdbc.executeQuery(stmt, sql);
      		//6.ResultSet을 처리
-     		System.out.println("aa55555");
      		jdbc.ExecuteResultSet(rs);
      		//7.
-     		System.out.println("aa77");
      		DBClose.close(conn, stmt, rs);
+     	}
+     	public String enterSql() {
+     		System.out.println("ENTER SQL: ");
+     		String query = "";
+     		int i=1;
+     		while(true) {
+     			System.out.print(i + ": ");
+     			query = query + " " + sc.nextLine();
+     			i++;
+     			if(query.charAt(query.length() -1) == ';') {
+     				query = query.substring(0, query.length()-1);
+     				break;
+     			}
+     		}	
+     		System.out.println("Entered Query... " + query);
+     		return query;
      	}
      	
      	public Statement getStatement(Connection conn){
      		Statement stmt = null;
      		try {
-     			stmt = conn.createStatement();
+     			stmt = conn.createStatement();		
      		} catch (SQLException e) {
-     			System.out.println("Statement Error ");
+     			System.out.println("Syntax Error ");
      		}
      		return stmt;
      	}
      	
-     	public ResultSet executeQuery(Statement stmt) {
+     	public ResultSet executeQuery(Statement stmt, String sql) {
      		ResultSet rs = null;
-     		
-     		System.out.print("SELECT ");
-     		String select = sc.nextLine();
-     		System.out.print("\nFROM ");
-     		String from = sc.nextLine();
-     		System.out.print("\nWHERE ");
-     		String where = sc.nextLine();
-     		
-     		String query = "SELECT " + select + " FROM " + from;
-     		if(where == null) query = query + "WHERE" + where;
-     		
-     		System.out.println("Entered Query... " + query);
      		try {
-     			rs = stmt.executeQuery(query);
+     			rs = stmt.executeQuery(sql);
+     			System.out.println("SQL Injection Success");
      		} catch (SQLException e) {
      			System.out.println("Yon Entered a Wrong SQL");
      		}
@@ -332,13 +465,14 @@ JDBC
      			System.out.println("Cannot find Column name");
      		}		
      	}
-     }
-     ```
-
+   }
      
-
+   ```
+  
+   
+  
   3. Run: main.java
-
+  
      ```java
      package Run;
      import co.example.libs.*;
@@ -346,8 +480,8 @@ JDBC
      	public static void main(String[] args) {
      		JDBC j = new JDBC();
      		j.runJDBC();
-     	}
+   	}
      }
      ```
-
+  
      
