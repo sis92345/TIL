@@ -6,6 +6,8 @@ JDBC
 > JDBC 순서
 >
 > JDBC API
+>
+> PreparedStatement
 
 > JDBC 활용
 
@@ -21,6 +23,11 @@ JDBC
     - 데이터의 처리를 Database에서 하는게 아닌 Java의 클래스와 메소드로 처리하기 위함
       - 데이터의 처리를 DB에서 할 것 인지, Java에서 할 것 인지는 개발자의 선택이다.
       - 만약 Java에서 처리하고자 한다면 Database에서 모든 데이터를 문자열 데이터로 형변환 한 후 가져오는 것이 편하다.
+- *JDBC에서 SELECT, DML 주의점*
+  - SELECT는 PreparedStatement/Statement **executeQuery()**를 사용
+    - 1 ~ 7단계 진행
+  - DML은 PreparedStatement/Statement **executeUpdate()**를 사용
+    - **6단계 생략**
 
 ### 2. JDBC  순서
 
@@ -38,25 +45,32 @@ JDBC
 
   - **2단계: oracle driver Loading한다**.
 
-    - `Class.forName(Driver)`를 사용하여 DB 드라이버를 로드한다.
+    - Class.forName() 사용
 
-      ```
-      -Class.forName()이란
-      Class.forName()이란 Java Reflection API의 일부이다. 자바 리플렉션 API는 구체적인 클래스의 타입을 알지 못해도 클래스의 변수 및 메소드 등에 접급하게 해주는 API이다. forName()은 Class 클래스에 속해있는데 Class 클래스는 JVM에서 동작할 클래스의 정보를 묘사하는 메타 클래스이다. 
-      즉 클래스의 정보를 얻어오는 클래스이다. 
-      IN APIDOC: Returns the Class object associated with the class orinterface with the given string name. Invoking this method isequivalent to
-      forName()은 파라메터로 들어간 클래스의 객체를 반환한다.
-      ```
+      - `Class.forName(Driver)`를 사용하여 DB 드라이버를 로드한다.
 
-    - JDBC로 오라클 DB 드라이브를 등록하려면 다음과 같이 작성하면 된다.
+        ```
+        -Class.forName()이란
+        Class.forName()이란 Java Reflection API의 일부이다. 자바 리플렉션 API는 구체적인 클래스의 타입을 알지 못해도 클래스의 변수 및 메소드 등에 접급하게 해주는 API이다. forName()은 Class 클래스에 속해있는데 Class 클래스는 JVM에서 동작할 클래스의 정보를 묘사하는 메타 클래스이다. 
+        즉 클래스의 정보를 얻어오는 클래스이다. 
+        IN APIDOC: Returns the Class object associated with the class orinterface with the given string name. Invoking this method isequivalent to
+        forName()은 파라메터로 들어간 클래스의 객체를 반환한다.
+        ```
 
-      ```java
-      Class.forName("oracle.jdbc.driver.OracleDriver");
-      ```
+      - JDBC로 오라클 DB 드라이브를 등록하려면 다음과 같이 작성하면 된다.
 
-    - `Class.forName("oracle.jdbc.driver.OracleDriver")`만 입력하면 자동으로 객체가 생성되고 DriverManager에 등록된다.
+        ```java
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        ```
 
-    - <u>JDBC API 4.0 이상 부터는 JDBC 드라이브를 자동으로 로드하도록 DriverManager.getConnection 메서드가 개선되었다.</u>
+      - `Class.forName("oracle.jdbc.driver.OracleDriver")`만 입력하면 자동으로 객체가 생성되고 DriverManager에 등록된다.
+
+      - <u>JDBC API 4.0 이상 부터는 JDBC 드라이브를 자동으로 로드하도록 DriverManager.getConnection 메서드가 개선되었다.</u>
+
+    - DriverManager.registerDriver(Driver arg0)를 사용 
+
+      - Driver arg0: 드라이버 객체
+        - 오라클: new OracleDriver()
 
   - **3단계: Database에 connection**
 
@@ -66,14 +80,21 @@ JDBC
 
   - **4단계: 문장객체(Statement) 생성한다.**
 
-    - Connection 타입 변수.createStatement();를 이용
+    - Statement 또는 PreparedStatement
+    - PreparedStatement는 SQL문을 캐시를 이용하여 저장한다. 즉 Statement는 컴파일 할 때 마다 SQL문을 실행하지만 PreparedStatement는 재활용이 가능하다. 성능상의 우위가 존재
+      - Statement: Connection 타입 변수.createStatement();를 이용
+    - PreparedStatement: Connection 타입 변수.preparedStatement();를 이용
 
-  - **5단계: Select의 경우 executeQurey()를 통해 주어진 SQL 문장을 실행한다.**
+  - **5단계: QL 문장을 실행한다.** 
 
-    - Statement executeQurey()
-    - 쿼리문 입력
+    - **SELECT문의 경우: executeQurey()**
+      - Statement executeQurey(sql);
+      - PreparedStatement executeQurey(); 파라미터에 sql문을 넣지 않는다.
+    - **DML: executeUpdate()**
+      - Statement executeUpdate(sql);
+      - PreparedStatement executeUpdate(); 파라미터에 sql문을 넣지 않는다.
 
-  - **6단계: ResultSet이라는 가상테이블을 처리한다.** 
+  - **6단계: SELECT문일 경우에만 ResultSet이라는 가상테이블을 처리한다.** 
 
     - 데이터를 실제로 처리하는 단계
 
@@ -467,6 +488,7 @@ JDBC
      	}
    }
      
+     ```
    ```
   
    
@@ -482,6 +504,6 @@ JDBC
      		j.runJDBC();
    	}
      }
-     ```
+   ```
   
      
