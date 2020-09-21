@@ -1,4 +1,4 @@
-JDBC
+MVC
 ==========
 
 > MVC의 개념
@@ -7,9 +7,6 @@ JDBC
 >
 > MVC의 예
 >
-> PreparedStatement
-
-> JDBC 활용
 
 ### 1. MVC의 개념
 
@@ -29,6 +26,8 @@ JDBC
 ### 2.  MVC의 구성요소
 
 ------
+
+​	![MVC](https://github.com/sis92345/TIL/blob/master/Java/png/MVC.png)
 
 - Model
   - APP의 정보, 데이터를 나타내며, 이러한 Data들의 가공을 책임진다.

@@ -16,7 +16,8 @@ TIL
 > 4. [Casting](https://github.com/sis92345/TIL/blob/master/Java/Casting.md)
 > 5. [Array](https://github.com/sis92345/TIL/blob/master/Java/Array.md#1-배열의-개념)
 > 6. [JDBC](https://github.com/sis92345/TIL/blob/master/Java/JDBC.md)
-> 7. [부스러기](https://github.com/sis92345/TIL/blob/master/Java/부스러기.md)
+> 7. [MVC](https://github.com/sis92345/TIL/blob/master/Java/MVC.md)
+> 8. [부스러기](https://github.com/sis92345/TIL/blob/master/Java/부스러기.md)
 
 ### 3. SQL
 
