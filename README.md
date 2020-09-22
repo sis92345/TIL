@@ -24,7 +24,9 @@ TIL
 ---------------
 
 > 1. [JOIN](https://github.com/sis92345/TIL/blob/master/Sql/join.md)
-> 2. [값 복사와 주소 복사](https://github.com/sis92345/TIL/blob/master/Sql/DML.md)
+> 2. [DML](https://github.com/sis92345/TIL/blob/master/Sql/DML.md)
+> 3. [값 복사와 주소 복사](https://github.com/sis92345/TIL/blob/master/Sql/DDL.md)
+> 4. 
 
 ### 4. ETC  
 
