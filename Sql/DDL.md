@@ -502,5 +502,18 @@ AS
 SELECT empno, ename, job, hiredate, dname
 FROM emp
 WHERE 1<0;
+
+--emp_temp 테이블에 '복사한 테이블' 주석을 추가하고 테이블의 empno칼럼에 '복사한 컬럼' 주석을 추가하라. 추가한 후 주석을 확인하라
+--COMMENT 추가
+COMMENT ON TABLE emp_temp IS '복사한 테이블';
+COMMENT ON COLUMN emp_temp IS '복사한 컬럼';
+--COMMENT 확인
+SELECT * 
+FROM user_tab_comments 
+WHERE table_name = 'emp_temp';
+
+SELECT * 
+FROM user_col_comments 
+WHERE table_name = 'emp_temp';
 ```
 
