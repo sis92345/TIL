@@ -212,9 +212,11 @@ JDBC
       - **PreparedStatement**는 Statement에 비해 성능성의 이점이 있다. 
       - `?`이 포함된 SQL문은 불완전 SQL문이다. 이 문장도 쿼리 문장 분석 -> 객체 체크을 한다. 
       - <u>**PreparedStatement**는 `?` 부분에만 계속 변환을 주어 지속적으로 SQL문을 수행할 수 있다.</u>
+  - 주의점: PreparedStatement의 ?는 Sql문 전체를 받을 수 없다. 
+        - 불완전 Sql문 자체도 문법검사, 객체검사를 진행하기 때문이다.
 
     - **PreparedStatement의 선언 순서**
-
+    
       1.  불완전 SQL문 작성
          - `?`을 포함한 문장을 말한다.
       2. Connection prepareStatement(sql)로 prepareStatement 인스턴스 생성
@@ -225,11 +227,11 @@ JDBC
          - 그 외 등등...
       4. ResultSet 인스턴스 생성
          - `ResultSet rs = pstmt.executeQuery()`
-           - 주의점: **PreparedStatement**는 executeQuery() 파라메터에 인자를 넣지 않는다.
+       - 주의점: **PreparedStatement**는 executeQuery() 파라메터에 인자를 넣지 않는다.
       5. 이후 과정은 동일
 
     - PreparedStatement 예
-
+    
       ```java
       package Run;
       
@@ -275,9 +277,9 @@ JDBC
       	DBClose.close(conn, pstmt, rs);
       	}
       }
-      
+  
       ```
-
+    
       
 
 ### 4 JDBC 활용
