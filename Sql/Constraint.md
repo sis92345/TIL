@@ -121,6 +121,33 @@ Constraint
   - 제약 조건에는 이름을 부여할 수 있다. 
     - 제약 조건의 삭제, 활성화, 비활성화시 제약조건의 이름이 필요하므로 제약 조건의 이름 부여는 필수 사항이다.
     - 제약 조건 이름 부여 규칙: `TABLENAME_COLUMN_ NN / PK / FK / UK / CK`
+  
+- 제약 조건 부여의 예
+
+  ```plsql
+  -- 제약조건 및 DEFAULT OPTION 복습
+  DROP TABLE student;
+  
+  CREATE TABLE Student(
+      hakbun          CHAR(7),
+      name            VARCHAR2(20)          CONSTRAINT student_name_NN NOT NULL,
+      math            NUMBER(3)    DEFAULT 0  CONSTRAINT student_math_NN NOT NULL,
+      age             NUMBER(3)    DEFAULT 20  CONSTRAINT student_age_NN NOT NULL,
+      seq             NUMBER(5),
+      city            VARCHAR2(30),
+      gender          CHAR(1)      DEFAULT 0,
+      CONSTRAINT studnet_hakbun_PK PRIMARY KEY(hakbun), --PK
+      CONSTRAINT studnet_math_CK CHECK(math BETWEEN 0 AND 100), --CK
+      CONSTRAINT studnet_age_CK CHECK(age >19),
+      CONSTRAINT studnet_city_CK CHECK(city IN ('서울', '부산', '부천')),
+      CONSTRAINT studnet_city_UK UNIQUE(city),
+      CONSTRAINT studnet_gender_CK CHECK(gender IN ('1', '0')),
+      --CONSTRAINT studnet_zipcode_FK FOREIGN KEY(zipcode) REFERENCES zipcode(zipcode): 참조할 부모 테이블의 값은 유니크, 기본키
+      CONSTRAINT studnet_zipcode_FK FOREIGN KEY(seq) REFERENCES zipcode(seq)
+  );
+  ```
+
+  
 
 ### 2 . DEFAULT Option
 
@@ -299,36 +326,206 @@ Constraint
 
   
 
-
-
-### 5. RENAME
+### 5. FORIGN KEY
 
 ------
 
+- FORIGN KEY: 외래키
 
+  - 외래키는 서로 다른 테이블 간 관계를 정의한는데 사용한다.
 
-### 6. TRUNCATE
+  - 자식 테이블의 외래키는 반드시 부모 테이블의 UNIQUE 또는 PRIMARY KEY이어야 한다.
+
+    ```plsql
+    CREATE TABLE test1(
+        no NUMBER(7) CONSTRAINT test1_no_PK PRIMARY KEY,
+        job VARCHAR(20) CONSTRAINT test1_job_FK REFERENCES emp(job) --emp테이블의 job은 기본키나 유니크가 아니므로 test1 테이블에서 외래키로 사용할 수 없다.
+    );
+    ```
+
+  - 만약 참조할 테이블에 값이 하나도 존재하지 않는다면 외래키를 지정할 수 없다
+
+- FROEIGN KEY 생성
+
+  - 기본 형식: `columnName VARCHAR2(30) (CONSTRAINT tablename_columnName_FK REFERENCES) referencedTableName(referencedColumn)`
+
+  - 테이블 생성 시 외래키 생성
+
+    - 컬럼레벨 제약 조건으로  FOREIGN KEY 생성
+
+      - 컬럼레벨 제약 조건으로 외래키를 생성할 때는 `FOREIGN KEY` 키워드를 사용하지 않고 바로 `REFENENCES`를 사용한다.
+
+        ```plsql
+        CREATE TABLE CART(
+            cartid 		NUMBER(10) CONSTRAINT CART_cart_id_PK PRIMARY KEY 
+            memberid	NUMBER(10) CONSTRAINT CART_member_id_FK REFERENCES member(member_id) --컬럼 레벨 제약 조건은 FOREIGN KEY 키워드를 생략
+        )
+        ```
+
+    - 테이블 레벨 제약 조건으로 FOREIGN KEY 생성
+
+      - 테이블 레벨 제약 조건으로 FOREIGN KEY 생성할 때에는 FOREIGN KEY 키워드를 사용해야 한다.
+
+        ```plsql
+        CREATE TABLE Cart(
+            cart_id     NUMBER(10),
+            member_id   NUMBER(5) CONSTRAINT cart_member_id_FK REFERENCES member(member_id),
+            product_id  NUMBER(5),
+            CONSTRAINT cart_cart_id_PK PRIMARY KEY(cart_id),
+            CONSTRAINT cart_product_id_FK FOREIGN KEY(product_id) REFERENCES Product(product_id)
+        ); 
+        ```
+
+  - 이미 만든 테이블에 FOREIGN KEY 제약 조건을 부여: 
+
+    - 기본 형식: `ALTER TABLE tablName ADD (CONSTRAINT table_name_deptno_FK) FOREIGN KEY(deptno) REFERENCES dept(dpetno)`
+
+    - 예
+
+      ```plsql
+      --FOREIGN KEY 부여
+      ALTER TABLE emp_copy
+      ADD CONSTRAINT emp_copy_deptno_FK FOREIGN KEY(deptno) 
+      REFERENCES dept_copy(deptno);
+      ```
+
+- FOREIGN KEY의 주의점
+
+  - 자식 테이블의 외래키는 반드시 부모 테이블의 UNIQUE 또는 PRIMARY KEY이어야 한다.
+
+  - 만약 참조할 테이블의 열 값이 하나도 존재하지 않는다면 외래키를 지정할 수 없다
+
+    ```plsql
+    CREATE TABLE dept2
+    AS
+    SELECT *
+    FROM dept
+    WHERE 1<0;
+    
+    CREATE TABLE emp2
+    AS
+    SELECT *
+    FROM emp;
+    
+    ALTER TABLE emp2
+    ADD CONSTRAINT emp2_deptno_FK FOREIGN KEY(deptno) REFERENCES dept2(deptno); --dept2 테이블의 deptno열에는 아무런 데이터도 없다. 따라서 외래키를 만들 수 없다.
+    
+    ALTER TABLE emp2
+    ADD CONSTRAINT emp2_deptno_FK FOREIGN KEY(deptno) REFERENCES dept(deptno); --dept 테이블의 deptno에는 값이 있다, 따라서 외래키를 만들 수 있다.
+    ```
+
+  - 외래키가 지정되어 있으면 테이블을 삭제할 수 없다. 
+
+    - 외래키 제약 조건을 삭제해야 한다.
+
+  - 외래키가 참조하는 부모 테이블의 열에 없는 값을 데이터로 입력할 수 없다.
+
+    ```
+    INSERT INTO emp2(empno, ename, deptno)
+    VALUES(1111, '한지민', 80); --dept 테이블의 deptno는 10, 20, 30, 40이므로 외래키인 deptno에 80값을 넣을 수 없다.
+    ```
+
+    
+
+- 외래키 제약 조건 삭제
+
+  ```plsql
+  ALTER TABLE emp1
+  DROP CONSTRAINT emp1_deptno_FK;
+  ```
+
+- 외래키로 참조되는 부모 테이블 데이터의 제거
+
+  - 현재 삭제하려는 열 값을 참조하는 데이터를 먼저 삭제한다.
+    - emp테이블의 deptno가 dept의 deptno테이블의 deptno 열의 참조하는 경우
+    - emp 테이블의 deptno 열에서 dept.deptno삭제하려는 데이터를 먼저 삭제한 후 dept 테이블에서 deptno를 제거
+  - 현재 삭제하려는 열 값을 참조하는 데이터를 수정한다. 
+    - emp테이블의 deptno가 dept의 deptno테이블의 deptno 열의 참조하는 경우
+    - emp 테이블의 deptno 열에서 dept.deptno삭제하려는 데이터를 변경
+  - FOREIGN KEY 제약 조건 자체를 삭제
+
+- 외래키 제약 조건의 조건들
+
+  - ON DELETE CASCADE: 부모 테이블의 데이터를 삭제하면 참조하는 자식 데이터도 같이 삭제된다.
+
+    ```plsql
+    ADD CONSTRAINT emp1_deptno_FK FOREIGN KEY(deptno) 
+    REFERENCES dept1(deptno) ON DELETE CASCADE;
+    ```
+
+  - ON DELETE SET NULL: 부모 데이터를 삭제할 시 자식 테이블의 값을  NULL로 바꾼다.
+
+    ```plsql
+    ALTER TABLE emp1
+    ADD CONSTRAINT emp1_deptno_FK FOREIGN KEY(deptno) 
+    REFERENCES dept1(deptno) ON DELETE SET NULL; 
+    ```
+
+### 6.UNIQUE
 
 ------
 
+- UNIQUE
 
+  - 열에 데이터의 중복을 허용하지 않는다.
+  - 단 NULL값은 허용한다.
 
-### 7. DROP
+- UNIQUE 제약 조건 부여
+
+  - 테이블 생성 시 제약 조건 부여
+
+    ```plsql
+    CREATE TABLE test1(
+        no NUMBER(7),
+        job VARCHAR(20) CONSTRAINT test1_job_UK UNIQUE, -- 컬럼 레벨 제약 조건
+        CONSTRAINT test1_no_UK UNIQUE(no) -- 테이블 레벨 제약 조건
+    );
+    ```
+
+  - 이미 존재하는 테이블에 UNIQUE 생성
+
+    ``` plsql
+    ALTER TABLE dept1
+    ADD CONSTRAINT dept1_dname_UK UNIQUE(danme);
+    ```
+
+- UNIQUE 제약조건의 추가, 삭제
+
+  - 이미 존재하는 컬럼에 UNIQUE 부여
+
+    ```plsql
+    ALTER TABLE TABLE_UNIQUE
+    MODIFY(TEL UNIQUE);
+    ```
+
+  - UNIQUE 제약 조건 삭제
+
+    ```plsql
+    ALTER TABLE TABLE_UNIQUE
+    DROP CONSTRAINT TABLE_UNIQUE_TEL_UK;
+    ```
+
+    
+
+### 7. CHECK
 
 ------
 
+- CHECK
 
+  - 데이터의 형태와 범위를 정한다.
 
-### 8. COMMENT
+- 예
 
-------
-
-
-
-
-### 9. DDL 문제
-
-------
-
-
-
+  ```plsql
+  --CHECK: 부서의 위치는 서울, 부산,대전, 대구, 인천, 광주, 울산만 가능해야 한다.
+  ALTER TABLE dept1
+  ADD CONSTRAINT dept1_loc_CK CHECK (loc IN ('SEOUL','PUSAN', '대구','인천','대전','울산'));
+  
+  INSERT INTO dept1
+  VALUES(40, '디자인팀', '대구');
+  
+  
+  INSERT INTO dept1
+  VALUES(60, '디자인팀', '평양'); --CHECK 제약 조건에 위배
+  ```
