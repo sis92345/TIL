@@ -82,7 +82,8 @@ JDBC
 
     - Statement 또는 PreparedStatement
     - PreparedStatement는 SQL문을 캐시를 이용하여 저장한다. 즉 Statement는 컴파일 할 때 마다 SQL문을 실행하지만 PreparedStatement는 재활용이 가능하다. 성능상의 우위가 존재
-      - Statement: Connection 타입 변수.createStatement();를 이용
+      - **Statement**: Connection 타입 변수.createStatement();를 이용
+      - **Scrollable ResultSet**: .createStatement(int resultSetType, int resultSetConcurrency)를 이용
     - PreparedStatement: Connection 타입 변수.preparedStatement();를 이용
 
   - **5단계: QL 문장을 실행한다.** 
@@ -280,9 +281,195 @@ JDBC
   
       ```
     
-      
 
-### 4 JDBC 활용
+4 Scrollable ResultSet
+
+------
+
+- Scrollable Statement
+
+  - 기존의 Statement는 Forward Only만을 제공했다.
+    - 따라서 기존의 Statement는 한 레코드를 읽고 다음 테이블만 계속해서 읽을 수 있었다.
+  - 하지만 Scrollable Statement는 전후 이동이 가능하다.
+    - 따라서 Scrollable ResultSet는 한 레코드를 읽고 내가 원하는 레코드로 이동시킬 수 있다.
+    - 따라서 Scrollable ResultSet는 양방향 스크롤 기능이 추가되었다.
+
+- Scrollable ResultSet의 선언
+
+  - `4단계: 문장객체(Statement) 생성한다.`에서 `Statement createStatement(int resultSetType, int resultSetConcurrency)`를 이용한다.
+
+  - 예
+
+    ```java
+    	DBConnection dbconn = new DBConnection();
+    		Connection conn = dbconn.getConnection(); //2,3
+    		Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY); //4. Scrollable ResultSet을 사용한다.
+    ```
+
+  - Scrollable ResultSet 생성자 파라미터
+
+    - int resultSetType
+      - ResultSet.TYPE_FORWARD_ONLY: Foward Only, 오직 next()만 가능하다. 
+      - ResultSet.TYPE_SCROLL_INSENSITIVE: 불감,  스크롤은 가능하나 변경된 사항은 적용되지 않는다.
+        * 최초 Result Set이 생성된 시점의 데이터 만 볼 수 있다.
+       - ResultSet.TYPE_SCROLL_SENSITIVE: 민감, 스크롤은 가능하나 변경된 사항은 적용된다.
+          - Database에 적용된 변경 사항이 바로 적용되어 새로운 데이터를 볼 수 있다,
+       - 위 3개 인자는 전부 연결을 닫고 다시 열면 변경 내역이 표시된다.
+     -  int resultSetConcurrency
+        - ResultSet.CONCUR_READ_ONLY: 수정 불가능, 읽기 전용
+       *  ResultSet.CONCUR_UPDATABLE: 수정 가능
+
+  - Scrollable ResultSet Method
+
+    - Method
+
+      | 메소드                     | 설명                                                         |
+      | -------------------------- | ------------------------------------------------------------ |
+      | boolean absolute(int row)  | row값에 해당하는 절대 위치로 이동, 음수면 마지막 레코드에서 음수만큼 뒤로 이동 |
+      | boolean relative(int rows) | 현재 위치를 기준으로 row만큼 앞/뒤로 이동                    |
+      | boolean next()             | 다음 레코드로 이동                                           |
+      | boolean previous()         | 이전 레코드로 이동                                           |
+      | void afterLast()           | 마지막 행 다음 레코드로 이동: 행이 없으므로 행을 이동하지 않으면 `마지막행 다음의 결과 집합`이라는 오류가 발생 |
+      | void beforeFirst()         | 처음 레코드 전으로 커서 이동: 행이 없으므로 행을 이동하지 않으면 `마지막행 다음의 결과 집합`이라는 오류가 발생 |
+      | int getType()              | int resultSetType의 타입을 int로 반환: TYPE_FORWARD_ONLY 1003/TYPE_SCROLL_INSENSITIVE 1004/TYPE_SCROLL_SENSITIVE 1005 |
+      | int getConcurrency()       | int resultSetConcurrency의 타입을 int로 반환: ResultSet.CONCUR_READ_ONLY 1007/ResultSet.CONCUR_UPDATABLE 1008 |
+      | boolean isFirst()          | 커서가 테이블의 첫번째 레코드가 있는지 boolean으로 반환      |
+      | boolean isLast()           | 커서가 테이블의 마지막 레코드에 있는 지 boolean으로 반환     |
+
+    - 예
+
+      ```java
+      public class test {
+      	public static void main(String[] args) throws SQLException {
+      		DBConnection dbconn = new DBConnection();
+      		Connection conn = dbconn.getConnection();
+      		Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+      		ResultSet rs = stmt.executeQuery("SELECT empno, ename, job, sal FROM emp_Copy");
+      		rs.absolute(8); //테이블 레코드의 절대 위치로 이동 boolean
+      		rs.absolute(-2);//테이블 마지막 레코드에서 음수만큼 뒤로 이동 boolean
+      		rs.first();//테이블 첫번째 레코드로 이동 boolean
+      		rs.last();//테이블 마지막 레코드로 이동 boolean
+      		System.out.println(rs.isFirst()); //커서가 테이블의 첫번째 레코드가 있는지 boolean으로 반환
+      		System.out.println(rs.isLast()); //커서가 테이블의 마지막 레코드에 있는 지 boolean으로 반환
+      		System.out.println(rs.getType()); //int resultSetType의 타입을 int로 반환
+      		//TYPE_FORWARD_ONLY 1003
+      		//TYPE_SCROLL_INSENSITIVE 1004
+      		//TYPE_SCROLL_SENSITIVE 1005
+      		System.out.println(rs.getConcurrency());
+      		//ResultSet.CONCUR_READ_ONLY 1007
+      		//ResultSet.CONCUR_UPDATABLE 1008
+      		rs.beforeFirst();// 처음 레코드 전으로 커서 이동
+      		rs.afterLast();// 마지막 레코드 다음으로 커서 이동 마지막행 다음의 결과 집합
+      		rs.relative(-1);//현재 레코드 위치에서 앞/뒤로 이동
+      		rs.next();
+      		rs.previous();
+      
+      		System.out.println(rs.getInt(1) + rs.getString(2) + rs.getString(3) + rs.getDouble(4));
+      		DBClose.close(conn);
+      		
+      	}
+      }
+      ```
+
+  - Scrollable ResultSet Updatable
+
+    - Scrollable ResultSet의 가장 큰 장점은 INSEET, DELETE, UPDATE가 가능하다는 것이다.
+
+    - Scrollable ResultSet로 테이블 데이터를 삽입, 수정, 삭제하려면 `ResultSet.CONCUR_UPDATABLE`이어야 한다.
+
+    - INSERT
+
+      - METHOD
+
+        - moveToInsertRow(): 현재 커서 위치는 커서가 삽입 행에 있는동안 저장된다. 삽입 행은 업데이트할 수 있는 ResultSet과 연결된 특수한 행으로 기본적으로 ResultSet에 행을 추가하기 전에 Updater 메소드를 호출하여 새 행을 생성할 수 있다.
+        - insertRow(): insertRow()는 테이블에 행을 추가한다. insertRow()가 실행되기 위해서는 삽입행에 위치해야 한다.
+        - UpdateInt/Strint/Double/CharacterStream/Object(int columnIndex, Type(String, int ...) X)
+          - 해당하는 데이터를 ResultSet에 업데이트한다.
+          - int columnIndex: SELECT문으로 선택한 컬럼의 순서, 또는 이름
+            - 예: `"SELECT empno, ename, job, sal FROM emp_Copy"`이라면 
+              - rs.updateInt(1, 8888);은 empno에 8888을 삽입
+              - rs.updateString(2, "한지민");는 ename에 한지민을 삽입
+
+      - INSERT 순서
+
+        ```java
+        public class test {
+        	public static void main(String[] args) throws SQLException {
+        		DBConnection dbconn = new DBConnection();
+        		Connection conn = dbconn.getConnection();
+        		Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        		ResultSet rs = stmt.executeQuery("SELECT empno, ename, job, sal FROM emp_Copy");
+        		rs.moveToInsertRow(); //1. 
+        		rs.updateInt(1, 8888); //2. 열에 값 삽입
+        		rs.updateString(2, "한지민");
+        		rs.updateString(3, "DERVELOP");
+        		rs.insertRow(); //3. 
+        
+        		System.out.println(rs.getInt(1) + rs.getString(2) + rs.getString(3) + rs.getDouble(4));
+        		DBClose.close(conn);
+        		
+        	}
+        }
+        ```
+
+    - UPDATE
+
+      - 사용하는 메소드는 INSERT와 같다.
+        
+        - updateRow()로 DB에 반영
+    
+        - 예
+    
+          ```java
+          public class test {
+          	public static void main(String[] args) throws SQLException {
+          		DBConnection dbconn = new DBConnection();
+          		Connection conn = dbconn.getConnection();
+          		Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+          		ResultSet rs = stmt.executeQuery("SELECT empno, ename, job, sal FROM emp_Copy");
+          		rs.last();
+          		rs.updateDouble("sal", 5000);
+          		rs.updateRow();
+          
+          		System.out.println(rs.getInt(1) + rs.getString(2) + rs.getString(3) + rs.getDouble(4));
+          		DBClose.close(conn);
+          		
+          	}
+          }
+          ```
+      - 하지만 수정하려는 레코드의 위치로 이동해야 한다.
+    
+    - DELETE
+    
+      - `deleteRow()`로 삭제
+      
+      - 예
+      
+        ```java
+        import java.sql.Connection;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.sql.Statement;
+        
+        public class test {
+        	public static void main(String[] args) throws SQLException {
+        		DBConnection dbconn = new DBConnection();
+        		Connection conn = dbconn.getConnection();
+        		Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        		ResultSet rs = stmt.executeQuery("SELECT empno, ename, job, sal FROM emp_Copy");
+        		rs.last();
+        		rs.deleteRow();
+        		rs.last();
+        		System.out.println(rs.getInt(1) + rs.getString(2) + rs.getString(3) + rs.getDouble(4));
+        		DBClose.close(conn);
+        		
+        	}
+        }
+        ```
+      
+        
+
+### 5 JDBC 활용
 
 ------
 
