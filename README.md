@@ -27,6 +27,7 @@ TIL
 > 2. [DML](https://github.com/sis92345/TIL/blob/master/Sql/DML.md)
 > 3. [DDL](https://github.com/sis92345/TIL/blob/master/Sql/DDL.md)
 > 4. [Constraint](https://github.com/sis92345/TIL/blob/master/Sql/Constraint.md)
+> 5. [Constraint](https://github.com/sis92345/TIL/blob/master/Sql/SqlObject.md)
 
 ### 4. ETC  
 
