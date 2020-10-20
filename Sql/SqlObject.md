@@ -24,6 +24,7 @@ DB OBJECT
     - VIEW
     - INDEX
     - SYNONYM
+  - 데이터 사전 --> 작성하기
 
 ### 2 . TABLE
 
