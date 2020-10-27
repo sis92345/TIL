@@ -18,7 +18,7 @@
 
     - 일반적인 4-Tire Web Application Architecture의 구조는 다음과 같다.
 
-        ![](D:\git_env\TIL\img\tomcat1.jpg)
+        ![](https://github.com/sis92345/TIL/blob/master/img/tomcat1.jpg)
         
         - 클라이언트가 웹 서버에 요청을하면 웹 서버는 정적 페이지를 보내고 웹 컨테이너에서 동적 페이지를 처리한다. 이 웹 서버와 웹 컨테이너를 합쳐 WAS라고하며 WAS는 실제 비즈니스 업무 로직을 처리하고 결과로 응답한다. 여기에 영구적으로 데이터를 보관, 조회, 관리하기 위해 DB와 연결한다.
 
