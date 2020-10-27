@@ -30,8 +30,8 @@ git
         $git config user.name "username"
         $git config user.name "username"
         ```
-    
-    #### 2.2 git remote
+
+#### 2.2 git remote
 
 ------
 
@@ -62,7 +62,49 @@ git
     $git remotr show TIL
     ```
 
-3. git 파일 관리 명령어
+### 3. git branch 조작
+
+------
+
+#### 3.1. branch 생성과 삭제: checkout -b & branch -delete
+
+------
+
+- Git branch를 생성하고 삭제하는 명령어이다.
+
+- 생성, 삭제한  branch를 원격 remote branch에 반영하기 위해서는 push를 해야한다.
+
+  - push를 하지 않으면 로컬 저장소에만 결과가 반영된다.
+
+- branch 생성
+
+  ```
+  git checkout -b feature-01
+  git push origin feature-01
+  git branch --set-upstream-to origin/feature-01 //브랜치 연동
+  ```
+
+- branch 삭제
+
+  - branch를 삭제하고자 할 때는 다른 branch로 이동한 다음 삭제 명령어를 사용한다.
+  - 예를 들어 main과 master branch가 있고 master branch를 삭제해보자
+
+  ```
+  git checkout master //master branch로 이동
+  git branch --delete main //main branch 삭제
+  git branch --D main //main branch를 강제 삭제
+  git push web :main //push
+  ```
+
+   
+
+#### 3.2. branch 이동: checkout
+
+------
+
+- `git checkout [branch_name]`: 해당하는 브렌치로 이동
+
+### 4. git 파일 관리 명령어
 
 ------
 
