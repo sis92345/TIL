@@ -17,6 +17,7 @@ Servlet
 
   - 웹 기반 요청에 대한 동적인 처리가 가능한 하나의 클래스
   - Servlet은 Server side에서 돌아가는 Java Program으로 백엔드 개발자가 담당해야할 부분이다.
+    - MVC로 예를 들면 JSP가 view에서 돌아간다면 이 view에 필요한 model에서 돌아가는게 servlet이다.
   
 - **Java Servlet 메커니즘이해**
 
@@ -147,63 +148,63 @@ Servlet
 - Servlet으로 작성한 Context를 Tomcat을 이용하여 Web에 올리기 위해서는 3가지 방법을 사용한다.
 
   - **FM: Tomcat의 `server.xml`에 `<context>`태그 를 등록한 후 해당 docBase에 Context구조를 갖춘 폴더를 준비하고 Web.xml에 url을 등록**
-- **`@WebServlet`이용 FM방법과 같이 `server.xml`에 `<context>`를 등록하는건 갖지만 해당 Context의 Web.xml의 `metadata-complete="true"`를 false로 바꾸고 로딩할 Servlet 파일의 클래스 명 위에 `@WebServlet("url-pattern")`등록**
+  - **`@WebServlet`이용 FM방법과 같이 `server.xml`에 `<context>`를 등록하는건 갖지만 해당 Context의 Web.xml의 `metadata-complete="true"`를 false로 바꾸고 로딩할 Servlet 파일의 클래스 명 위에 `@WebServlet("url-pattern")`등록**
   - WAR파일 이용: 이클립스를 이용하여 자동으로 만든 Context구조는 FM방식의 Context와 다르므로 WAR파일로 만들어 CATALINA_HOME의 WebApps에 WAR파일로 넣어야한다.
-  - 이클립스를 이용하여 자동으로 Context구조를 갖출경우 WEB-INF가 WebContext아래에 있으므로 Context구조를 지니고 있지 않아서 Tomcat에 바로 등록이 불가능하다,
-  
-1. **FM** 
-  
+    - 이클립스를 이용하여 자동으로 Context구조를 갖출경우 WEB-INF가 WebContext아래에 있으므로 Context구조를 지니고 있지 않아서 Tomcat에 바로 등록이 불가능하다,
+
+  1. **FM** 
+
      1. <u>CATALINA_HOME\conf\server.xml의 `<host>`밑에 올릴 Context 태그를 추가</u>
 
         1. `<Context *path*="/Day62" *docBase*="D:\git_env\Webhome\Day62" />`
 
            1. path: 논리적 경로
            2. docBase: 물리적 경로
-  
+
         2. 해당 Context는 다음과 같은 구조를 지녀야 한다.
-  
+
            ```
            Context folder1
            	- src: java source file
-         	- WEB-INF: 필수
+           	- WEB-INF: 필수
            		- classes: java classes file
-         		- lib: java jar file
+           		- lib: java jar file
            		- web.xml: 필수
-         ```
-  
-      3. Context의 자세한 내용은 다음 챕터를 참고
-  
-      4. Apache로 접속하려면 따로 설정해야한다. 이는 ETC의 톰캣 설치를 참고
-  
-   2. <u>web.xml</u>
-  
+           ```
+
+        3. Context의 자세한 내용은 다음 챕터를 참고
+
+        4. Apache로 접속하려면 따로 설정해야한다. 이는 ETC의 톰캣 설치를 참고
+
+     2. <u>web.xml</u>
+
         1. 주요 태그
-  
+
            1. `<display-name>Welcome to 1027</display-name>`: tomcat manager app에 올릴 설명
-  
+
            2. ```xml
-            <servlet>
+              <servlet>
                 	<servlet-name>HelloWorld</servlet-name>
                 	<servlet-class>HelloServlet</servlet-class>
-              </servlet>
+                </servlet>
               ```
-  
+
               - `<servlet-name>Register</servlet-name>`: `<servlet-mapping>`의 `<servlet-name>`이 찾아올 이름
               - `<servlet-class>RegisterServlet</servlet-class>`: `<servlet-mapping>`의 `<servlet-name>`이 `<servlet>`의 `<servlet-name>`을 찾아왔다면 이 태그에 해당하는 클래스를 메모리에 로딩한다.
-  
+
            3. ```xml
-            <servlet-mapping>
+              <servlet-mapping>
                 	<servlet-name>HelloWorld</servlet-name>
                 	<url-pattern>/servlets/servlet/Hello.nhn</url-pattern>
                 </servlet-mapping>
-            ```
-  
-            - `<servlet-name>HelloWorld</servlet-name>`: `<servlet>`에서 해당하는 `<servlet-name>`을 찾는다.
+              ```
+
+              - `<servlet-name>HelloWorld</servlet-name>`: `<servlet>`에서 해당하는 `<servlet-name>`을 찾는다.
               - `<url-pattern>/servlets/servlet/Hello.nhn</url-pattern>`: 유저가 `<url-pattern>`에 해당하는 url을 입력하면 `<servlet-name>`을 찾는다. 
                 - `<url-pattern>`은 실제 경로를 감추는 역할을 한다.
-  
+
            4. web.xml 전체 코드
-  
+
               ```xml
               <?xml version="1.0" encoding="UTF-8"?>
               
@@ -238,18 +239,18 @@ Servlet
                 </servlet-mapping>
                 <servlet-mapping>
                 	<servlet-name>Calculator</servlet-name>
-              	<url-pattern>/servlets/servlet/Calculator</url-pattern>
+                	<url-pattern>/servlets/servlet/Calculator</url-pattern>
                 </servlet-mapping>
-            </web-app>
+              </web-app>
               
-            ```
-  
-   3. Web Container에서 돌아갈 파일 작성
-  
+              ```
+
+     3. Web Container에서 돌아갈 파일 작성
+
         - 여기서는 java파일
-  
+
         - 전체 코드
-  
+
           ```java
           import java.io.IOException;
           import java.io.PrintWriter;
@@ -267,27 +268,27 @@ Servlet
           		out.println("<h1>Welcome Servlet</h1>");
           		out.println("<div style='color:red;font-size:2em;'>");
           		out.println("Hello, World</div>");
-        		out.close();
+          		out.close();
           	}
           }
           
           ```
 
           - <u>Servlet파일은 항상 HttpServlet을 상속받아야한다.</u>
-        - `doGet()`/`doPost()`: Apache의 Tomcat에 보낸 GET/POST에 따라 다른 메소드로 받아야한다.
+          - `doGet()`/`doPost()`: Apache의 Tomcat에 보낸 GET/POST에 따라 다른 메소드로 받아야한다.
             - Web Server에서 GET방식으로 전송했는데 doPost()로 받으면 오류
-        - `PrintWriter out = res.getWriter();`: Web Server로  출력
-  
-2. `@WebServlet("url-pattern")`**사용**
-  
-   1.  url-pattern: web.xml의 `<url-pattern>/servlets/servlet/Calculator</url-pattern>`과 동일
-  
-   2. 마찬가지로 server.xml에 context를 등록해야한다.
-  
+          - `PrintWriter out = res.getWriter();`: Web Server로  출력
+
+  2. `@WebServlet("url-pattern")`**사용**
+
+     1.  url-pattern: web.xml의 `<url-pattern>/servlets/servlet/Calculator</url-pattern>`과 동일
+
+     2. 마찬가지로 server.xml에 context를 등록해야한다.
+
      3. web.xml 수정
-  
+
         - `metadata-complete="ture"`를 `metadata-complete="false"`
-  
+
         ```xml
         <?xml version="1.0" encoding="UTF-8"?>
         
@@ -296,17 +297,17 @@ Servlet
           xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
                               http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
           version="4.0"
-        metadata-complete="false"> <!--metadata-complete="false", 여기가 달라진다.-->
+          metadata-complete="false"> <!--metadata-complete="false", 여기가 달라진다.-->
         
-      </web-app>
+        </web-app>
         
         ```
 
      4. Web Container에서 돌아갈 파일 작성
-  
+
         - @WebServlet("url-pattern")를 클래스위에 붙인다.
         - 사용자는 "url-pattern"로 입력하면 해당 클래스가 메모리에 로딩된다.
-  
+
         ```java
         
         package com.example.libs;
@@ -382,9 +383,9 @@ Servlet
         
      
   3. WAR파일 이용
-  
+
      - 이클립스를 이용하여 자동으로 Context구조를 갖출경우 WEB-INF가 WebContext아래에 있으므로 Context구조를 지니고 있지 않아서 Tomcat에 바로 등록이 불가능하다.
-       - 실제 파일의 구조
+     - 따라서 이클립스에서는 project를 EXPORT할 때 WAR파일로 만들 수 있다.
 
 ### 3. Tomcat Context
 
@@ -392,13 +393,24 @@ Servlet
 
 - Context: Tomcat에서 돌아가는 Web Application
 - Context는 다음과 같은 구조를 지녀야한다.
-- 이미지1
-- WEB-INF: 필수
+- ![https://github.com/sis92345/TIL/blob/master/img/tomcat2.jpg](https://github.com/sis92345/TIL/blob/master/img/tomcat2.jpg)
+  - WEB-INF: 필수
   - 나머지는 내가 필요해서 만든 파일
-- 이미지2
-- classes: `java.class`파일이 위치
+- ![https://github.com/sis92345/TIL/blob/master/img/tomcat2-1.jpg](https://github.com/sis92345/TIL/blob/master/img/tomcat2-1.jpg)
+  - classes: `java.class`파일이 위치
   - libs: 자바에 필요한 `jar`파일이 위치
     - 예를 들어 DB연동에 필요한 Driver jar가 여기에 위치해야 Tomcat에서 연동할 수 있다.
+- 이클립스에서 자동으로 생성할때 문제점과 대처법
+  - Eclipse에서 Danymic Web Project로 프로젝트를 생성할때 다음과 같이 Context의 구조가 약간 다르다.
+  - ![https://github.com/sis92345/TIL/blob/master/img/tomcat3.jpg](https://github.com/sis92345/TIL/blob/master/img/tomcat3.jpg)
+    - Java Resources
+      - Java, Servlet과 같은 동적 콘텐츠가 위치
+    - WebContent
+      - HTML, CSS, JavaScript와 같은 정적 콘텐츠가 위치
+      - **build**: class파일이 위치한다. 본래 Context구조의 WEB-INF/classes의 역할
+      - **WEB-INF**: 바로 위에 아무 폴더가 없던 WEB-INF가 WebContent가 여기에 위치한다.
+        - web.xml
+  - 따라서 본래의 방법으로 Tomcat에서는 이 Context를 인식할 수 없다. 그래서 앞에 설명한 WAR로 만들어서 webapps폴더에 넣어서 인식한다.
 
 
 ### 4. JavaScript의 변수
