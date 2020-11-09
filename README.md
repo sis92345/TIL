@@ -26,12 +26,14 @@ TIL
 > 1. [JavaScript Overview](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptOverview.md)
 > 2. [JavaScript Object](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptObject.md)
 
-### 4. Java Servlet/JSP
+### 4. Servlet/JSP
 
 ---------------
 
 > 1. [Servlet Basic](https://github.com/sis92345/TIL/blob/master/Servlet/Servlet.md)
-> 2. 
+> 2. [Servlet 기초 문법](https://github.com/sis92345/TIL/blob/master/Servlet%26JSP/Servlet%20basic%20syntax.md)
+> 3. [JSP Overview](https://github.com/sis92345/TIL/blob/master/Servlet%26JSP/JSP%20Overview.md)
+> 4. [JSP 내장 객체](https://github.com/sis92345/TIL/blob/master/Servlet%26JSP/JSP%20Implicit%20Object.md)
 
 ### 4. SQL
 
