@@ -1,17 +1,19 @@
-Servlet
+JSP Overview
 ==========
 
 > JSP란
 >
 > JSP의 기초 문법
 
-> Directive
+> Page Directive
 >
 > Scriptlet
 >
 > Exprsssion
 >
 > Declaration
+>
+> Comment
 
 ### 1. JSP
 
@@ -324,11 +326,291 @@ Servlet
      - `<jsp:~ />`
   8. **EL & JSTL**
   9. **Custom tag**
-- 이 문서에서는 `Directive`, `Scriptlet`, `Exprsssion`, `Declaration`만 설명한다. 나머지는 각각의 단독 문서를 참고하라
+  
+- 이 문서에서는 `Directive`, `Scriptlet`, `Exprsssion`, `Declaration`만 간단히 설명한다. 나머지는 각각의 단독 문서를 참고하라
 
-### 3. Tomcat Context
+- *JSP는 기본적으로 다음 네 개의 패키지를 자동으로 Import한다.*
+
+  - `java.lang`.*
+  - `javax.servlet.*`
+  - `javax.servlet.http.*`
+  - `javax.servlet.jsp.*`
+  - JSP에서 Import할 것은 이 4개 페키지를 제외한 나머지이다.
+
+- JSP 기초 문법 살펴보기
+
+  ```jsp
+  <!--Page Directive-->
+  <%@ page contentType="text/html; charset=utf-8"
+  		 import="java.util.Calendar, java.util.Date"
+  		 session="true" trimDirectiveWhitespaces="true"
+  		 pageEncoding="ISO-8859-1"%>
+  <%@ page import="java.text.SimpleDateFormat, java.sql.Connection" %>
+  <!--Scriptlet-->
+  <%
+  	Calendar today = Calendar.getInstance();
+  	int year = today.get(Calendar.YEAR); 	
+  	int month = today.get(Calendar.MONTH) + 1; 	
+  	int day = today.get(Calendar.DAY_OF_MONTH); 	
+  %>
+  <!--Expression-->
+  <div>오늘은 <%=year %>년 <%=month %>월 <%=day %>일입니다.</div>
+  ```
+
+  - 주요 코드
+  - `<%@ page contentType="text/html; charset=utf-8"  import="java.util.Calendar, java.util.Date" session="true" trimDirectiveWhitespaces="true" pageEncoding="ISO-8859-1"%>`
+    - `contentType="text/html; charset=utf-8"`
+      - MIME Type을 위해 사용
+    - `import="java.util.Calendar, java.util.Date"`
+      - java.util.Calendar와 java.util.Date를 import
+    - `session="true"`
+      - 세션을 허용: false로 할 경우 session을 사용할 수 없다.
+
+### 3. Page Directive
 
 ------
 
-- 
+- **Page Directive**
 
+  - `<%@ page ~ %>`
+  - `<%@ taglib ~ %>`
+  - `<%@ include ~ %>`
+  - 여기서는  `<%@ page ~ %>`만을 살펴본다. 
+
+- `<%@ page ~ %>`: 클라이언트이 요청에 의해 실행되는 JSP 페이지의 필요한 정보를 지정
+
+- 주요 속성
+
+  - **import="패키지.클래스명"**: import할 클래스를 지정한다.
+  - **extends="클래스명"**: 상속받을 클래스를 지정
+  - **buffer="12kb"**: JSP 페이지의 출력 버퍼를 결정
+    - **autoFlush="true"**: Auto Flush 여부 결정
+  - **session="true"**: HttpSession의 사용 여부를 결정
+  - **contentType="text/html"**: JSP페이지가 생성할 문서의 타입 결정
+  - **isErrorPage="false"**: 에러 페이지 사용 여분
+  - **pageEncoding="utf-8"**: 저장 할 파일의 인코딩
+
+- Buffer
+
+  - JSP는 바로 Web Server, Client로 보내는게 아니라 Buffer로 보내고 Buffer가 Flush하여 보내는 것
+
+  - 이를 조정하는게 buffer와 autoFlush 속성이다.
+
+    ```jsp
+    <%@page buffer="1kb" autoFlush="true"%>
+    <% for(int i=1;i<=1000;i++){ %>
+    <%=i %>
+    <% } %>
+    ```
+
+    - 이 페이지는 buffer에 1kb 차면 자동으로 Flush
+      - int는 4kb이므로 4000kb, buffer는 1kb를 4000번 보낸다.
+      - autoFlush="false"하면 buffer를 출력할 수 없으므로 오류
+      - 
+
+### 4. Scriptlet
+
+------
+
+- **Scriptlet**
+
+  -  `<% Java Code %>`
+
+- <u>스크립트릿은 jsp페이지가 서블릿으로 변환되고 요청될 때 _jspService 메소드 안에 선언되는 요소</u>
+
+- **주의점**
+
+  - <u>모든 Scriptlet은 _jspService() 메소드 안에서 선언된다.</u>
+  - **즉 scriptlet의 모든 변수는 지역변수**이며
+  - **scriptlet은 메소드를 선언할 수 없다.**
+    - *메소드, static 변수, 멤버 변수를 사용하기 위해서는 반드시 Declaration을 사용한다.*
+
+- scriptlet의 예
+
+  ```jsp
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
+      pageEncoding="UTF-8"%>
+  <!--scriptletDemo.jsp?first=5%second=9&op=x  -->
+  <%
+  	int first = Integer.parseInt(request.getParameter("first"));
+  	int second = Integer.parseInt(request.getParameter("second"));
+  	String op = request.getParameter("op");
+  	
+  	
+  %>
+  <!DOCTYPE html>
+  <html>
+  <head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  </head>
+  <body>
+  	<h1>계산기</h1>
+  	<%
+  	int result = 0; //지역변수
+  	switch(op){
+  		case "+": result = first + second; break; 	
+  		case "-": result = first - second; break; 	
+  		case "*": result = first * second; break; 
+  		case "/": result = first / second; break; 
+  		case "per": result = first % second; break; 
+  	}
+  	%>
+  	<div style ='font-size: 3em;'>
+  	<%=first %> <%=op %> <%=second %> = <%=result %>
+  	</div>
+  </body>
+  </html>
+  
+  ```
+
+### 5. Declaration
+
+------
+
+- **Declaration**
+
+  - `<%! %s>`
+  - 멤버변수,  static 변수, 메소드를 이용하기위해 사용
+
+- scriptlet과 비교
+
+  - 만약 아래와 같이 선언됬다면...
+
+    ```jsp
+    <%
+    	String msg = "Hello, JSP";
+    %>
+    ```
+
+  - 이 코드는 실제 다음과 같다.
+
+    ```java
+    public void _jspService(final javax.servlet.http.HttpServletRequest request, final javax.servlet.http.HttpServletResponse response)
+          throws java.io.IOException, javax.servlet.ServletException {
+    	//나머지 코드는 생략
+    	String msg = "Hello, JSP";
+      }
+    ```
+
+  - 즉 *메소드, static 변수, 멤버 변수를 사용하기 위해서는 반드시 Declaration을 사용한다.*
+
+- 예
+
+  ```jsp
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
+      pageEncoding="UTF-8"%>
+  <%!
+  	//static 변수
+  	static String msg = "Hello, JSP";
+  	int result = add(5,9);
+  %>
+  	값은 <%=result %> 입니다.
+  <%
+  	//지역변수
+  	String msg = "Hello, JSP!!!";
+  	
+  	//자바는 메소드안에 메소드를 만들 수 없다.
+  	//int add(int a, int b){
+  	//	return a + b;
+  	//}
+  	
+  %>
+  <%!	
+  	//메소드는 Declaration을 이용해야한다.
+  	int add(int a, int b){
+  		return a + b;
+  	}
+  	
+  %>jsp
+  ```
+
+### 6. Exprsssion
+
+------
+
+- **Exprsssion**
+
+  - `<%= %>`: 출력 담당
+
+- 주의점
+
+  - Expression는 `;`를 자동으로 붙인다.
+  - 즉 Expression에 ;를 사용하면 오류
+
+- 예
+
+  ```jsp
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
+      pageEncoding="UTF-8"%>
+  <div>
+  	1부터 10까지의 합은 
+  	<span style ='color:red;font-size:2em;'>
+  		<%-- <%= %> 이용--%>
+  		<%--주의: Exprsssion에는 절대로 ;을 붙이지 않는다. 자동으로 붙여준다.--%>
+  		<%=1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 %>
+  	</span>
+  </div>
+  <div>
+  	20부터 30까지의 합은 
+  	<span style ='color:blue;font-size:2em;'>
+  		<%--주의: Exprsssion에는 절대로 ;을 붙이지 않는다. 자동으로 붙여준다.--%>
+  		<%
+  			//out 이용
+  			int sum = 0;
+  			sum = 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 + 18 + 19 + 20;
+  			out.println(sum);
+  		%>
+  	
+  	</span>
+  		<%
+  			
+  			int sum1 = 0;
+  			sum1 = 10 + 11 + 12 + 13 + 14 + 15 + 16 + 17 + 18 + 19 + 20;
+  			out.println("<span style ='color:blue;font-size:2em;'>");
+  			out.println(sum1);
+  			out.println("</span>");
+  		%>
+  </div>
+  ```
+
+### 7. **Comment**
+
+------
+
+- **Comment**
+
+- JSP에서 사용할 수 있는 주석은 다음과 같다.
+
+  - HTML 주석: `<!--HTML 주석-->`
+  - JSP 주석: `<%--JSP 주석-->`
+  - scriptlet에서 사용하는 자바 주석: `//Java 주석`
+
+- 주의점
+
+  - HTML주석은 랜더링은 안하지만 소스보기를 통해 볼 수 있다: 즉 Servlet으로 코딩할 때 HTML 주석도 같이 변환된다.
+
+    - 실제 Servlet에서
+
+      ```java
+      out.write("\t<!-- HTML주석은 랜더링은 안하지만 소스보기를 통해 볼 수 있다: 즉 Servlet으로 코딩할 때 HTML 주석도 같이 변환된다. -->\r\n");
+      ```
+
+  - 자바 주석의 경우 Servlet으로 변활 할 때 해당 주석을 Servlet.java의 주석으로 변환하지만 자바주석이므로 브라우저로 넘어가지 않는다.
+
+    - 즉 JSP에서 자바주석을 사용하면 Servlet변환 시 같이 변환하여 해당 Servlet.java의 주석이 되지만 Servlet.java 주석이므로 브라우저로 넘어가지 않는다.
+
+  - JSP 주석을 사용하면 아예 Servlet으로 변환할 때 코드 자체가 넘어가지 않는다.
+
+  - 즉 주석의 강도는 다음과 같다.
+
+    - 1단계 주석: HTML 주석
+      - Java Code로 변환
+      - Servlet Class로 변환
+      - User Brower로 변환
+      - 하지만 User Brower에서 Randering할 수 없다.
+    - 2단계 주석: Java 주석
+      - Java Code로 변환
+      - 그 다음부터는 안된다.
+    - 3단계: JSP 주석
+      - Java Code로 변환할 수 없다.
