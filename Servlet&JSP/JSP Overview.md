@@ -405,7 +405,8 @@ JSP Overview
 
     - 이 페이지는 buffer에 1kb 차면 자동으로 Flush
       - int는 4kb이므로 4000kb, buffer는 1kb를 4000번 보낸다.
-      - autoFlush="false"하면 buffer를 출력할 수 없으므로 오류
+        - none도 가능
+      - autoFlush="false": 버퍼가 꽉 차면 flush여부 false를 하면 buffer가 꽉 차면 오류
       - 
 
 ### 4. Scriptlet
