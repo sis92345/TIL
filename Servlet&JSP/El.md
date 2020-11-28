@@ -216,7 +216,7 @@ EL(Expression Language)
 
 - EL에서도 JSP와 마찬가지로 내장 객체를 제공한다.
 
-  ![Web](https://user-images.githubusercontent.com/68282095/100517749-73c23c80-31d0-11eb-8c56-0e78e9de0ad1.jpg)
+  ![el](https://user-images.githubusercontent.com/68282095/100518064-99504580-31d2-11eb-9c6e-b463da3d2dbb.jpg)
 
   
 

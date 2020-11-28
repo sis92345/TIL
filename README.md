@@ -34,8 +34,9 @@ TIL
 > 2. [Servlet 기초 문법](https://github.com/sis92345/TIL/blob/master/Servlet%26JSP/Servlet%20basic%20syntax.md)
 > 3. [JSP Overview](https://github.com/sis92345/TIL/blob/master/Servlet%26JSP/JSP%20Overview.md)
 > 4. [JSP 내장 객체](https://github.com/sis92345/TIL/blob/master/Servlet%26JSP/JSP%20Implicit%20Object.md)
+> 5. [EL](https://github.com/sis92345/TIL/blob/master/Servlet%26JSP/El.md)
 
-### 4. SQL
+
 
 ### 4. SQL
 
@@ -46,6 +47,12 @@ TIL
 > 3. [DDL](https://github.com/sis92345/TIL/blob/master/Sql/DDL.md)
 > 4. [Constraint](https://github.com/sis92345/TIL/blob/master/Sql/Constraint.md)
 > 5. [Sql Object](https://github.com/sis92345/TIL/blob/master/Sql/SqlObject.md)
+
+### 4. Ajax
+
+------
+
+> 1. [Ajax](https://github.com/sis92345/TIL/blob/master/Ajax/Ajax.md)
 
 ### 5. ETC  
 
