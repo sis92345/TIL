@@ -28,11 +28,37 @@ JSP Implict Object
 ---------------
 
 - JSP 페이지를 작성할 때 특별한 기능을 제공하는 JSP 컨테이너가 제공하는 특별한 겍체를 말한다.
-
 - 집 컴퓨터와 합쳐야 함
 
+### 2.JSP 속성(attribute)과 속성과 관련된 메소드
 
-### 2. request
+------
+
+- **내장 객체의 속성(attribute)**
+
+  - <u>JSP의 속성(attribute)은 공유되는 데이터이다</u>. 즉 변수라고 할 수 있다.
+  - JSP의 내장 객체 중 속성(attribute)을 가지는 내장 객체는 다음과 같다
+    - request
+    - session
+    - application
+    - page(pageContext)
+  - 속성은 Scope, LifeCycle과 관련이 높다.
+    - scope는 속성을 공유할 수 있는 범위이다.
+      - 즉 위의 `request`, `session`, `application`, `pageContext` 의 속성 유효 범위는 모두 다르다.
+
+- <u>`request`, `session`, `application`, `pageContext` 내장 객체는 임의 속성 값(attribute)를 저장 하고 읽을 수 있는 메소드를 제공하고 있다.</u>
+
+- 내장 객체의 속성(attribute)과 관련된 메소드는 다음과 같다.
+
+  | 메소드                                  | 리턴 타입             | 설명                                                         |
+  | --------------------------------------- | --------------------- | ------------------------------------------------------------ |
+  | setAttribute(String, key, Object value) | void                  | 해당 내장 객체의 속성  값(attribute)을 설정하는 메소드로, 속성명에 해당하는 key 파라미터에, 속성 값에 해당하는 value 파라미터에 값을 저장한다. |
+  | getAttribute(String, key)               | Object                | 해당 내장 객체의 key를 읽어오는 메소드, <u>key에 해당하는 value를 object로 가져온다.</u> |
+  | getAttributeNames()                     | java.util.Enumeration | 해당 내장 객체의 모든 key를 읽어오는 메소드                  |
+  | removeAttribute(String key)             | void                  | 해당 내장 객체의 속성을 제거하는 메소드                      |
+
+
+### 3. request
 
 ------
 
@@ -407,22 +433,23 @@ JSP Implict Object
 
 - **pageContext**
   - type
-      - `javax.servlet.jsp.pageContext`
-
-  - pageContext의 용도
-
+      
+- `javax.servlet.jsp.pageContext`
+      
+- pageContext의 용도
+  
       1. 내장 객체를 가져온다.
          - Declaration에서는 내장 객체를 그냥 사용할 수 없고 pageContext의 메소드로 객체를 생성한다.
       2. 속성을 다룬다.
       3. **페이지의 흐름을 구한다.**
            1. include
            2. forward
-      4. 커스텀 태그 생성
-
-  - 주요 메소드
-
-      - 내장 객체를 가져오는 메소드
-
+    4. 커스텀 태그 생성
+  
+- 주요 메소드
+  
+    - 내장 객체를 가져오는 메소드
+  
         | 메소드                             | 설명                                | 비고 |
         | ---------------------------------- | ----------------------------------- | ---- |
         | ServletRequest getRequest()        | request 기본 객체를 반환합니다.     |      |
@@ -433,8 +460,8 @@ JSP Implict Object
         | JspWriter getOut()                 | out 기본 객체를 반환합니다          |      |
         | Exception getException()           | exception 기본 객체를 반환합니다    |      |
         | Object getPage()                   | page 기본 객체를 반환합니다.        |      |
-        - 예
-
+      - 예
+  
           ```jsp
           <%@page import="java.io.IOException"%>
           <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -465,22 +492,22 @@ JSP Implict Object
           	}
           	
           %>
-          ```
-
-    - 흐름 제어 관련 메소드
-
+        ```
+  
+  - 흐름 제어 관련 메소드
+  
       - | 메소드                               | 설명                                           | 비고 |
         | ------------------------------------ | ---------------------------------------------- | ---- |
         | void include(String relativeUrlPath) | 지정한 상대경로 페이지를 현재 페이지로 include |      |
-        | void forward(String relativeUrlPath) | 지정한 상대경로 페이지로 forward               |      |
-
+      | void forward(String relativeUrlPath) | 지정한 상대경로 페이지로 forward               |      |
+  
         - include를 하는 여러 방법
           1. `RequestDispatcher include(request, response)`: servlet에서만 사용
           2. pageContext의 `void include(String relativeUrlPath)`:  아래 2가지 방법을 많이 사용
           3. include directive: `<%@ include file="header.jsp" %>`
           4. action tag: `<jsp:include page="header.jsp"/>`: 추천
-          5. 자세한 내용은 action tag를 참고
-
+        5. 자세한 내용은 action tag를 참고
+  
 - pageContext의 예: forward
 
   ```jsp
