@@ -151,12 +151,12 @@ DI(Dependency Injection)
   - **외부 파일을 이용한 DI**:Properties 파일에 작성한 값을 이용한 방법
 
 
-### 3. [XML을 이용한 DI]()
+### 3. [XML을 이용한 DI](https://github.com/sis92345/TIL/blob/master/Spring/DIXml.md)
 
-### 4. [Annotation Class를 이용한 DI]()
+### 4. [Annotation Class를 이용한 DI](https://github.com/sis92345/TIL/blob/master/Spring/DIAnno.md)
 
-### 5. Component-scan을 이용한 Autowired
+### 5. [Component-scan을 이용한 Autowired](https://github.com/sis92345/TIL/blob/master/Spring/DILast.md)
 
-### 6. XML과 Annotation Class를 함께 사용하는 DI
+### 6. [XML과 Annotation Class를 함께 사용하는 DI](https://github.com/sis92345/TIL/blob/master/Spring/DILast.md)
 
-### 7. 외부 파일을 사용한 DI
+### 7. [외부 파일을 사용한 DI](https://github.com/sis92345/TIL/blob/master/Spring/DILast.md)
