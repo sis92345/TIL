@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Home">
+	<!-- resultMap: 결과와 BbsVO를 매핑 -->
+	<resultMap type="homeVO" id="selectMap"><!-- 비식별관계:Collection, 1대1은 Association  -->
+		<id column="idx" jdbcType="INTEGER" property="bno" javaType="Integer" /> <!-- property: VO Member -->
+		<result column="writer" jdbcType="VARCHAR" property="writer" javaType="String"/>
+		<result column="title" jdbcType="VARCHAR" property="title" javaType="String"/>
+		<result column="contents" jdbcType="VARCHAR" property="content" javaType="String"/>
+		<result column="email" jdbcType="VARCHAR" property="email" javaType="String"/>
+		<result column="writeday" jdbcType="DATE" property="regdate" javaType="String"/>
+		<result column="readnum" jdbcType="INTEGER" property="readnum" javaType="Integer"/>
+		<result column="grp" jdbcType="INTEGER" property="grp" javaType="Integer" />
+		<result column="lvl" jdbcType="INTEGER" property="lvl" javaType="Integer" />
+		<result column="step" jdbcType="INTEGER" property="step" javaType="Integer" />
+	</resultMap>
+	
+	<!-- SelectAll: 모든 글을 가져오는 SP -->
+	<select id="selectAll" statementType="PREPARED" resultMap="selectMap">
+		SELECT grp, idx, writer, title, contents, email, TO_CHAR(writeday, 'YYYY-MM-DD'), readnum, lvl, step
+		FROM bbs
+		ORDER BY grp DESC, step ASC
+	</select>
+	
+	<!-- 전체 레코드 수 조회: PageNation -->
+	<select id="selectCount" resultType="Integer">
+		SELECT COUNT(idx)
+		FROM bbs
+	</select>
+</mapper>

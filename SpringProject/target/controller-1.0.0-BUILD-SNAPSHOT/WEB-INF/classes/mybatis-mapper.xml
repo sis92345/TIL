@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Users">
+
+	<parameterMap type="userVO" id="insertParameterMap">
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="passwd" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="name" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="age" javaType="Integer" jdbcType="INTEGER" mode="IN"/>
+		<parameter property="gender" javaType="String" jdbcType="CHAR" mode="IN"/>
+	</parameterMap>
+	
+	<insert id="insertSP" parameterType="userVO" 
+			statementType="CALLABLE" parameterMap="insertParameterMap">
+		{ call sp_users_insert(?, ?, ?, ?, ?) }
+	</insert>
+
+
+
+
+
+	<insert id="insert" parameterType="userVO">
+		INSERT INTO Users(userid, passwd, name, age, gender)
+		VALUES(#{userid}, #{passwd}, #{name}, #{age}, #{gender})
+	</insert>
+	
+	<resultMap type="userVO" id="selectMap">
+		<result column="userid" jdbcType="VARCHAR" 
+			property="userid" javaType="String"/>
+		<result column="passwd" jdbcType="VARCHAR" 
+			property="passwd" javaType="String"/>
+		<result column="name" jdbcType="VARCHAR" 
+			property="name" javaType="String"/>
+		<result column="age" jdbcType="INTEGER" 
+			property="age" javaType="Integer"/>
+		<result column="gender" jdbcType="CHAR" 
+			property="gender" javaType="String"/>
+		<result column="flag" jdbcType="INTEGER" 
+			property="flag" javaType="Integer" />
+	</resultMap>
+	
+	<select id="selectAll" resultType="userVO" resultMap="selectMap">
+		SELECT * FROM Users ORDER BY age DESC
+	</select>
+	
+	<select id="selectOne" resultType="userVO" resultMap="selectMap"  parameterType="String">
+		SELECT * FROM Users
+		WHERE userid = #{userid}	
+	</select>
+	
+	<parameterMap type="hashMap" id="loginParameterMap">
+		<parameter property="userid" javaType="String"/>
+		<parameter property="passwd" javaType="String"/>
+		<parameter property="result" javaType="Integer" jdbcType="INTEGER" mode="OUT"/>
+	</parameterMap>
+	
+	<select id="login" statementType="CALLABLE" parameterMap="loginParameterMap">
+		{ call sp_users_login(?, ?, ?) }
+	</select>
+	
+	<update id="update" parameterType="userVO" >
+		<if test="  '남성'.equals(gender) ">
+		UPDATE Users
+		SET passwd = #{passwd}, name = #{name}, age = #{age}, gender = '1'
+		WHERE userid = #{userid}  
+		</if>
+		
+		<if test="  '여성'.equals(gender) ">
+		UPDATE Users
+		SET passwd = #{passwd}, name = #{name}, age = #{age}, gender = '2'
+		WHERE userid = #{userid}  
+		</if>
+	</update>
+	
+	<delete id="delete" parameterType="String">
+		DELETE FROM Users WHERE userid = #{userid}
+	</delete>
+	
+	
+	
+	
+	
+</mapper>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입 페이지</title>
+<link rel="stylesheet" href="../../../statics/css/bootstrap.css">
+<style>
+.container {
+	padding-right: 10%;
+	padding-left: 10%;
+}
+
+body {
+	background: linear-gradient(#e66465, #9198e5);
+	background-repeat: no-repeat;
+	height: 1100px;
+}
+
+form {
+	background-color: #bedbbb;
+	border-radius: 1em;
+	padding-right: 1em;
+}
+
+.trueResult {
+	color: lightgreen;
+	font-weight: 900;
+	font-size: 1.5em;
+}
+
+.falseResult {
+	color: lightcoral;
+	font-weight: 900;
+	font-size: 1.5em;
+}
+</style>
+<script src="../../../statics/js/jquery-3.5.1.js"></script>
+<script>
+  $(document).ready(function(){
+  	$('#btnSubmit').prop( "disabled", true); //처음에는 무조건 비활성화
+    $('form').on('submit', function(){
+      if($('#txtPasswd').val() != $('#txtPasswd1').val()){
+        alert("비밀번호와 비밀번호(확인)의 값이 서로 일치하지 않습니다.\n확인 후 다시 입력해 주세요.");
+        $('#txtPasswd').val('');
+        $('#txtPasswd1').val('');
+        $('#txtPasswd').focus();
+        return false;
+      }
+    });
+  	
+  	$("#txtUserid").on("blur", function(){
+  		$.ajax({
+  			url : "/membership/idcheck/" + $(this).val(),    //     /idcheck/jimin
+  			type : "POST",
+  			dataType : "json",
+  			success : function(data){
+  				if(data.result){   //사용할 수 있는 계정이라면
+  					$('#idCheckResult').text("").removeClass('falseResult');
+    				$('#idCheckResult').text('사용가능한 아이디입니다.').addClass('trueResult');
+    				$('#btnSubmit').prop( "disabled", false);  //버튼 활성화
+  				}else{   //사용할 수 없는 계정이라면
+  					$('#idCheckResult').text("").removeClass('trueResult');
+    				$('#idCheckResult').text('이미 사용중인 아이디입니다.').addClass('falseResult');
+    				$('#btnSubmit').prop( "disabled", true);  //버튼 비활성화
+  				}
+  			}
+  		});
+  	});
+  });
+</script>
+</head>
+<body>
+  <h1 class="text-center">회원 가입</h1>
+  <div class="container">
+    <div class="row">
+      <form class="form-horizontal" action="/membership/register" method="POST">
+        <div class="form-group">
+          <label for="txtUserid" class="col-sm-2 control-label">아이디</label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" name="userid" id="txtUserid" placeholder="아이디를 입력합니다." required>
+          </div>
+          <div class="col-sm-5">
+            <span id="idCheckResult"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="txtPasswd" class="col-sm-2 control-label">패스워드</label>
+          <div class="col-sm-10">
+            <input type="password" name="passwd" class="form-control" id="txtPasswd" placeholder="비밀번호를 입력합니다." required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="txtPasswd1" class="col-sm-2 control-label">패스워드(확인)</label>
+          <div class="col-sm-10">
+            <input type="password" name="passwd1" class="form-control" id="txtPasswd1" placeholder="다시 한번 비밀번호를 입력합니다." required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="txtName" class="col-sm-2 control-label">이름</label>
+          <div class="col-sm-10">
+            <input type="text" name="name" class="form-control" id="txtName" placeholder="이름을 입력합니다." required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="rdoFemale" class="col-sm-2 control-label">성별</label>
+          <div class="col-sm-10">
+            <input type="radio" name="gender" id="rdoMale" value="1">남성&nbsp;&nbsp;
+            <input type="radio" name="gender" id="rdoFemale" value="2" checked>여성
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="txtAge" class="col-sm-2 control-label">나이</label>
+          <div class="col-sm-10">
+            <input type="number" min="10" name="age" class="form-control" id="txtAge" placeholder="나이를 입력합니다.">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success" id='btnSubmit'>가입하기</button>
+            <button type="reset" class="btn btn-warning">취소하기</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
