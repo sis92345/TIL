@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Bbs">
+	<!-- resultMap: 결과와 BbsVO를 매핑 -->
+	<resultMap type="BbsVO" id="selectMap"><!-- 비식별관계:Collection, 1대1은 Association  -->
+		<id column="bno" jdbcType="INTEGER" property="bno" javaType="Integer" /> <!-- property: VO Member -->
+		<result column="title" jdbcType="VARCHAR" property="title" javaType="String"/>
+		<result column="content" jdbcType="VARCHAR" property="content" javaType="String"/>
+		<result column="email" jdbcType="VARCHAR" property="email" javaType="String"/>
+		<result column="writeday" jdbcType="DATE" property="regdate" javaType="String"/>
+		<result column="readnum" jdbcType="INTEGER" property="readnum" javaType="Integer"/>
+		<result column="name" jdbcType="VARCHAR" property="writer" javaType="String"/> <!-- 테이블에서 userid를 가져오고 이를 VO의 name member로 바인딩 -->
+		<result column="userid" jdbcType="VARCHAR" property="userid" javaType="String"/> <!-- 테이블에서 userid를 가져오고 이를 VO의 name member로 바인딩 -->
+	</resultMap>
+	
+	<!-- SelectAll: 모든 글을 가져오는 SP -->
+	<parameterMap type="hashMap" id="selectAllParameterMap">
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectMap"/>
+	</parameterMap>
+	<select id="selectAllSp" parameterMap="selectAllParameterMap" statementType="CALLABLE">
+		{ call sp_board_select_all(?) } 
+	</select>
+	
+	<!-- selectOneSp: 모든 글을 가져오는 SP -->
+	<parameterMap type="hashMap" id="selectOneParameterMap">
+		<parameter property="bno" javaType="Integer" jdbcType="INTEGER" mode="IN"/>
+		<parameter property="result" javaType="ResultSet" jdbcType="CURSOR" mode="OUT" resultMap="selectMap"/>
+	</parameterMap>
+	<select id="selectOneSp" parameterMap="selectOneParameterMap" statementType="CALLABLE">
+		{ call sp_board_select_one(?, ?) }	
+	</select>
+	
+	<!-- insertParameterMap: 글을 등록하는  ParameterMap -->
+	<parameterMap type="bbsVO" id="insertParameterMap">
+		<parameter property="title" javaType="String" jdbcType="VARCHAR" mode="IN"/> <!-- property="title"는 getTile -->
+		<parameter property="content" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="userid" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	<!-- InsertSp: 글을 등록하는 SP  -->
+	<insert id="insertSp" statementType="CALLABLE" parameterMap="insertParameterMap">
+		{ call sp_board_insert(?, ?, ?, ?) }
+	</insert>
+	
+	<!-- :조회수 증가 SP -->
+	<parameterMap type="hashMap" id="readnumUpdateParameterMap">
+		<parameter property="bno" javaType="Integer" jdbcType="INTEGER" mode="IN"/>
+	</parameterMap>
+	<update id="readnumUpdateSp" statementType="CALLABLE" parameterMap="readnumUpdateParameterMap">
+		{ call sp_board_readnum_update(?) }
+	</update>
+	
+	<!-- deleteSp: 게시글 삭제 -->
+	<parameterMap type="hashMap" id="deleteParameterMap">
+		<parameter property="bno" javaType="Integer" jdbcType="INTEGER" mode="IN"/>
+	</parameterMap>
+	<delete id="deleteSp" statementType="CALLABLE" parameterMap="deleteParameterMap">
+		{ call sp_board_delete(?)}
+	</delete>
+	
+	<!-- updateSp -->
+	<parameterMap type="BbsVO" id="updateParameterMap">
+		<parameter property="title" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="content" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="email" javaType="String" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="bno" javaType="Integer" jdbcType="INTEGER" mode="IN"/>
+	</parameterMap>
+	<update id="updateSp" parameterMap="updateParameterMap" statementType="CALLABLE">
+		{ call sp_board_update(?,?,?,?) }  
+	</update>
+</mapper>

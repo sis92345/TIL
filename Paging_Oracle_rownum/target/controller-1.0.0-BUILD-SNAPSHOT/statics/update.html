@@ -1,0 +1,54 @@
+  <h1 class="text-center">게시판 글쓰기</h1>
+  <div class="container">
+    <div class="row">
+      <form class="form-horizontal" action="/bbs/write" method="POST">
+        <div class="form-group">
+          <label for="txtTitle" class="col-sm-2 control-label">글제목</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" name="title" id="txtTitle" placeholder="글 제목을 입력합니다." required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="txtEmail" class="col-sm-2 control-label">이메일</label>
+          <div class="col-sm-2">
+            <input type="text" name="email" class="form-control" id="txtEmail" placeholder="이메일을 입력합니다.">
+          </div>
+          <div class="input-group col-sm-3">
+		        <span class="input-group-addon">@</span>
+		        <select class="form-control" name="company" id="company">
+				  <option value="naver.com">naver.com</option>
+				  <option value="google.com">google.com</option>
+				  <option value="daum.net">daum.net</option>
+				  <option value="nate.com">nate.com</option>
+				  <option value="example.com">example.com</option>
+				  <option>직접입력</option>
+				</select>
+      		</div>
+        </div>
+        <div class="form-group">
+          <label for="txtName" class="col-sm-2 control-label">글 내용</label>
+          <div class="col-sm-8">
+            <textarea class="form-control" name="content" rows="10" required="required"></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <button type="submit" class="btn btn-success" id='btnSubmit'>등록</button>
+            <button type="reset" class="btn btn-warning">취소</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+      CKEDITOR.replace('content');
+  </script>
+  <script>
+	$('#company').on('change',function(){
+		let com = document.getElementById("company");
+		if(com.selectedIndex == 5){
+			$(this).replaceWith("<input type=\"text\" name=\"email\" class=\"form-control\" id=\"txtEmail\" placeholder=\"이메일을 입력합니다.\">");
+		}
+		//alert(com.selectedindex);
+	});
+  </script>
