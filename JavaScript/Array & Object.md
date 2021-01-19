@@ -132,7 +132,7 @@
 
   - 함수 반환값 작성시 주의점 
 
-    ![https://user-images.githubusercontent.com/68282095/105045930-ce2e9980-5aab-11eb-864e-df49c8135198.jpg]()
+    ![https://github.com/sis92345/TIL/blob/master/Java/png/jsFunction.jpg]()
 
     - return과 return할 값이나 표현식 사이에 줄 바꿈 문자가 들어가면 다음과 같이 인식한다.
 

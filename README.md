@@ -25,6 +25,7 @@ TIL
 
 > 1. [JavaScript Overview](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptOverview.md)
 > 2. [JavaScript Object](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptObject.md)
+> 3. [Array & Object & Function]([https://github.com/sis92345/TIL/blob/master/JavaScript/Array%20%26%20Object.md](https://github.com/sis92345/TIL/blob/master/JavaScript/Array %26 Object.md))
 
 ### 4. Servlet/JSP
 
@@ -60,11 +61,12 @@ TIL
 
 > 1. [DI](https://github.com/sis92345/TIL/blob/master/Spring/README.md)
 
-### 6. ETC  
+### 6. ETC    
 
 ---------------
 > 1. [자바에서 문자열을 파싱하는 3가지 방법](https://github.com/sis92345/TIL/blob/master/ETC/ParsingInJava.md)
 > 2. [값 복사와 주소 복사](https://github.com/sis92345/TIL/blob/master/ETC/Copy.md)
 > 3. [Signed Unsigned](https://github.com/sis92345/TIL/blob/master/ETC/Signed%20Unsigned.md)
 > 4. [톰캣 설치](https://github.com/sis92345/TIL/blob/master/ETC/Tomcat_install.md)
+> 5. [페이징 처리](https://github.com/sis92345/TIL/tree/master/Paging_Oracle_rownum/페이징%20처리. md)
 
