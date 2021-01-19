@@ -132,7 +132,8 @@
 
   - 함수 반환값 작성시 주의점 
 
-    [img1]: https://user-images.githubusercontent.com/68282095/105045930-ce2e9980-5aab-11eb-864e-df49c8135198.jpg
+    ![https://user-images.githubusercontent.com/68282095/105045930-ce2e9980-5aab-11eb-864e-df49c8135198.jpg]()
+
     - return과 return할 값이나 표현식 사이에 줄 바꿈 문자가 들어가면 다음과 같이 인식한다.
 
       ```javascript
@@ -148,3 +149,4 @@
       ```
 
       
+
