@@ -6,7 +6,7 @@ TIL
 >
 > ### 1. git  
 ---------------
-> 1. [git](https://github.com/sis92345/TIL/blob/master/git/git.md)
+> 1. [git](https://github.com/sis92345/TIL/blob/master/git/git.md) : 사라짐
 
 ### 2. Java  
 ---------------
