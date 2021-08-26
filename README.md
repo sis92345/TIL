@@ -19,7 +19,7 @@ TIL
 > 7. [MVC](https://github.com/sis92345/TIL/blob/master/Java/MVC.md)
 > 8. [부스러기](https://github.com/sis92345/TIL/blob/master/Java/부스러기.md)
 
-### 3. Java Script
+### 3. JavaScript
 
 ---------------
 
