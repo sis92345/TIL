@@ -52,7 +52,7 @@ TIL
 
 ### 8. Error Code
 
-> 1. [Mapped Statements collection does not contain value for ~ ](https://github.com/sis92345/TIL/blob/master/ErrorCode/MappedStatement.md.md)
+> 1. [Mapped Statements collection does not contain value for ~ ](https://github.com/sis92345/TIL/blob/master/ErrorCode/MappedStatement.md)
 
 ### 9. ETC    
 
