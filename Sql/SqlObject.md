@@ -26,7 +26,7 @@ DB OBJECT
     - SYNONYM
   - 데이터 사전 --> 작성하기
 
-### 2 . TABLE
+### 2 . TABLE 
 
 ------
 
