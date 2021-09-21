@@ -24,6 +24,10 @@ git : PermissionDenied
 
 - 실제로 저 2개 링크는 20년도 8월 이전글이다. **만약 git 인증으로 access token을 사용했는데 해당 토큰의 `Select Scopes`로 권한을 설정하지 않았을 경우 위 Permission denied 오류가 똑같이 발생한다. 이 문제를 해결하기 위해서는 해당 토큰의 권한에서 repo 권한을 설정하면 된다.** 추가로 간단하게 access token을 생성하는 방법을 올린다.
 
+- repo 권한을 체크하면 다음과 같이 정상적으로 푸쉬할 수 있다.
+
+  <img width="500" alt="스크린샷 2021-09-21 오후 1 20 23" src="https://user-images.githubusercontent.com/68282095/134111101-d6aa9607-0218-4a22-9b48-92f08b88a134.png">
+
 ### 2. git access token 생성
 
 1. User setting으로 이동

@@ -52,7 +52,8 @@ TIL
 
 ### 8. Error Code
 
-> 1. [Mapped Statements collection does not contain value for ~ ](https://github.com/sis92345/TIL/blob/master/ErrorCode/MappedStatement.md)
+> 1. [sql : Mapped Statements collection does not contain value for ~ ](https://github.com/sis92345/TIL/blob/master/ErrorCode/MappedStatement.md)
+> 2. [git : permission denied 403](https://github.com/sis92345/TIL/blob/master/ErrorCode/gitPermissionDenied.md)
 
 ### 9. ETC    
 
