@@ -94,12 +94,128 @@
   ZSH_THEME='argoster'
   ```
 
-  
+- `zsh`의 주요 기능
+  - 경로 자동 완성
+    - `~/Document/00.Repository/TIL`은 `doc/00/TIL` + `TAB`ㅇㅡ로 자동으로 완성된다.
+  - 타이핑 교정
+    - `git abd`로 잘못 입력하면 가장 유사한 명령어를 알려준다,
+  - 명령어 추천
+    - `git a`를 입력하고 탭을 누르면 명령어를 추천한다. 탭을 눌러서 각 명령어를 이동할 수 있고 return키로 명령어를 선택할 수 있다.
+
+### 4. Iterm2
 
 ### 4. Iterm2 설정
 
-- 터미널을 꾸미기 위한 설정이다.
-- https://ooeunz.tistory.com/21를 참고
+- Mac에서 터미널을 보조 , 대체할 수 있는 application이다.
+
+- https://ooeunz.tistory.com/21를 참고하면 좋다
+
+- iterm2에서 한글이 깨지는 문제 해결
+
+  - 최초로 iterm2를 설치한 후 실행하면 한글이 깨져서 나온다. 이 문제가 발생하면 폰트를 바꿔주면 해결된다. 폰트는 네이버에서 나온 `D2Coding`을 추천한다. 
+  - 설정 방법
+    - Iterm2 -> preperence -> profile -> text -> font에서 수정한다. 밑에 한글 자소 분리 문제때문에 Unicode normlization form을 `NFC`로 변경하는 것을 추천한다,
+
+- iterm2 한글 자소 분리 현상 원인
+
+  `Window os` 와 `Mac os` 에서 유니코드를 처리하는 방식이 다르기 때문에 iterm2에서 한글 자소 분리 현상이 나타난다
+
+  - `Window os` : `NFC` 방식으로 처리 
+    - `NFD(Normalize Form C)` : 모든 음절을 Canonical Decomposition(정준 분해) 후 Canonical Composition(정준 결합)하는 방식 , 
+      - 예 )  `ㄱ` + `ㅏ` + `ㄱ` -> `각` ,  `각` 에 해당하는 코드 포인트를 저장한다.
+  - `Mac os` : `NFD` 방식으로 처리 
+    - `NFD(Normalize Form D)` : 모든 음절을 Canonical Decomposition(정준 분해)하여 한글 자모 코드를 이용하여 저장하는 방식
+      - 예 ) `각` -> `ㄱ` + `ㅏ` + `ㄱ` , 즉 3개의 코드 포인트를 저장한다.
+
+- 자소 분리 현상 해결
+
+  - Iterm2 -> preperenece -> profiles -> text -> Unicode normalization form을 NFC로 변경하면 된다,
+
+- 터미널 `${user}@${user}-ui-MacbookPro`에서 이름만 남기기 + 커스터마이징
+
+  - 각 테마 설정 파일에서 prompt_context를 수정하면 된다.
+
+    ```
+    prompt_context() {
+      if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+        prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
+      fi
+    }
+    ```
+
+  - `agonostar` 테마 기준으로 설정 파일은 다음과 같다
+
+    - 경로 : ` ~/.oh-my-zsh/theme/agnoster.zsh-theme`
+    - 경로 파일을 vi 편집기로 열어서 prompt_context가 적힌 부분을 찾아서 기존 부분을 주석처리 하고 위 코드를 새로 입력한다,
+    - `source  ~/.oh-my-zsh/theme/agnoster.zsh-theme`로 적용한다.
+
+  - 개인적으로 사용하고 있는 커스터마이징 형식은 다음과 같다
+
+    ```
+    ### Prompt components
+    # Each component will draw itself, and hide itself if no information needs to be shown
+    
+    # Context: user@hostname (who am I and where am I)
+    
+    ## Ver.Default : 기본 설정
+    #prompt_context() {
+    #  if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    #    prompt_segment black default "%(!.%{%F{yellow}%}.)%n@%m"
+    #  fi
+    #}
+    
+    ## Ver.NotShowName : 이름을 안보이고 싶을 때
+    #prompt_context() {
+    #  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    #    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
+    #  fi
+    #}
+    
+    ## Ver.Emoji : 랜덤 이모지
+    prompt_context() {
+      emojis=("⚡️" "🔥" "🐱" "👑" "😎" "💻" "🍎" "🦄" "🌈" "🇰 🇷 " "🚀" "💡" "🎉" "🔑" "🚦" "🌙")
+      RAND_EMOJI_N=$(( $RANDOM % ${#emojis[@]} + 1))
+      prompt_segment black default "ted ${emojis[$RAND_EMOJI_N]} "
+    }
+    ```
+
+    
+
+- terminal new line 적용 
+
+  - 코드가 창을 넘어갈 때 newline을 생성하는 명령어
+
+  - 각 테마 파일에서 작업하면 된다.
+
+    - 경로 : ` ~/.oh-my-zsh/theme/agnoster.zsh-theme`
+
+    - 경로 파일을 vi 편집기로 열어서 다음 코드를 추가
+
+      ```
+      prompt_newline() {
+        if [[ -n $CURRENT_BG ]]; then
+          echo -n "%{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR
+      %{%k%F{blue}%}$SEGMENT_SEPARATOR"
+        else
+          echo -n "%{%k%}"
+        fi
+      
+        echo -n "%{%f%}"
+        CURRENT_BG=''
+      }
+      ```
+
+  - Build_propmt의 prompt_hg와 prompt_end사이에 prompt_newline추가
+
+  - `source  ~/.oh-my-zsh/theme/agnoster.zsh-theme`로 적용한다.
+
+- Syntax highlighting 적용
+
+  - 사용 가능한 명령어에 highlight를 넣어주는 기능이다.
+
+- 최종 적용
+
+  <img width="747" alt="최종적용" src="https://user-images.githubusercontent.com/68282095/134105377-092aa2fa-8e8e-4a19-951d-a3d1536ac0a9.png">
 
 ### 5. mySql 설치
 
@@ -114,3 +230,6 @@
 
   - mysql.server start : 서버 시작
   - mysql.server restart : 서버 재시작
+
+
+
