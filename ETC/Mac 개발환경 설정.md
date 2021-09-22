@@ -31,8 +31,9 @@
 ### 2. Homebrew 설치
 
 - 루비기반 Mac 패키지 설치 관리자
-  - 공식 문서 : https://docs.brew.sh
-
+  
+- 공식 문서 : https://docs.brew.sh
+  
 - 설치 과정
 
   1. 다음을 터미널에 입력
@@ -231,5 +232,57 @@
   - mysql.server start : 서버 시작
   - mysql.server restart : 서버 재시작
 
+### 6. oracle database
 
+- MySql과 다르게 Mac에서 oracle 설치는 꽤 어렵다. 기본적으로 docker를 사용해서 oracle database를 사용할 수 있다.
 
+- **단 M1칩을 사용하는 Mac에서는 docker를 사용하는 방법조차 안된다.☹** 쉽게 말해서 M1 칩에서는 oracle을 설치해서 사용할 수 없다 ㅋ
+
+- 그런데 오히려 좋을 수 있는게 직접 설치할 수 없으므로 기존의 방법이 아닌 다른 방법을 사용해야 하므로 다른 공부를 할 수 있다는 점이 있다. 
+
+- M1칩 Mac에서 oracle database를 사용하는 방법은 크게 다음 3가지가 있다.
+
+  1. AWS RDS를 사용
+  2. Oracle Cloud를 사용 : https://shanepark.tistory.com/173
+  3. 따라 외부 Oracle Db에 접근해서 사용 . Mac에서는 클라이언트 역할만 수행한다. 즉 SqlDeveloper나 연결만 해서 외부 DB에 접근해서 사용한다.
+
+  나는 이 중 3번째 방법을 사용했다. 어차피 개인 프로젝트는 mysql을 사용할 거고, pl/sql연습이나 따로 oracle이 필요할 경우 따로 외부 DB에 접근해서 사용하면 될 것 같아서이다. 나는 집 데스크탑을 외부 DB로 연결했다.
+
+- 외부에서 DB를 접속할 수 있도록 설정
+
+  - 학원에서 한번 해보고 다시 해보는 거라 기억을 더듬으며 해야한다... 외부에서 DB를 접근하도록 설정하자
+
+  - **tnsnames.ora, listener.ora** 수정
+
+    - 경로 (컴퓨터마다 다름) : `C:\app\user\product\18.0.0\dbhomeXE\network\admin`
+
+    - LISTENER 수정
+
+      - 오라클 버전이 11g일 경우 HOST에 자신 컴퓨터 이름을 입력한다.
+
+      - 오라클 버전이 18g이상일 경우 자신의 ip를 입력한다.
+
+      - 기본 포트는 따로 변경하지 않을 경우 1521이다.
+
+        ```
+        # listener.ora
+        LISTENER =
+          (DESCRIPTION_LIST =
+            (DESCRIPTION =
+              (ADDRESS = (PROTOCOL = TCP)(HOST = ${ip})(PORT = #{port}))
+              (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC1521))
+            )
+          )
+          
+        # tnsnames.ora
+        LISTENER_XE =
+          (ADDRESS = (PROTOCOL = TCP)(HOST = ${ip})(PORT = #{port}))
+        ```
+
+    - 설정한 포트로 접근할 수 있도록 방화벽에서 해당 port를 열어주고 인바운드 규칙을 설정하면 된다.
+
+    - 마지막으로 oracle 서비스를 재시작하면 완료된다.
+
+- Mac에서 테스트
+
+  
