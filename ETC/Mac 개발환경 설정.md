@@ -211,7 +211,7 @@
 
   1. AWS RDS를 사용
   2. Oracle Cloud를 사용 : https://shanepark.tistory.com/173
-  3. 따라 외부 Oracle Db에 접근해서 사용 . Mac에서는 클라이언트 역할만 수행한다. 즉 SqlDeveloper나 연결만 해서 외부 DB에 접근해서 사용한다.
+  3. 따라 외부 Oracle Db에 접근해서 사용 . Mac에서는 클라이언트 역할만 수행한다. 즉 Mac에서는 외부 DB에 접근해서 사용한다.
 
   나는 이 중 3번째 방법을 사용했다. 어차피 개인 프로젝트는 mysql을 사용할 거고, pl/sql연습이나 따로 oracle이 필요할 경우 따로 외부 DB에 접근해서 사용하면 될 것 같아서이다. 나는 집 데스크탑을 외부 DB로 연결했다.
 
@@ -238,6 +238,13 @@
     - 설정한 포트로 접근할 수 있도록 방화벽에서 해당 port를 열어주고 인바운드 규칙을 설정하면 된다.
 
     - 마지막으로 oracle 서비스를 재시작하면 완료된다.
+
+- Mac SQL Developer 처음 설치 시 `locale not recoginized`  오류 문제
+
+  - SQL Developer를 맥에서 처음 사용할 시 locale을 인식하지 못하는 문제가 발생한다. 
+  - 해당 오류가 뜨지 않더라도 언어 및 지역을 한국어 , 대한민국으로 설정했는데 SQL Developer가 영어로 뜬다면 locale을 인식하지 못한 문제이다.
+  - 이 오류는 http://taewan.kim/tip/sqldeveloper_error_unrecog_locale/ 를 참고하면 된다.
+  - 만약 나처럼 해당 오류는 안떳지만 SQL Developer가 영어로 뜬다면 (언어 설정이 영어라면 문제 X) 시스템 환경설정 -> 언어 및 지역 -> 영어를 추가한 후 맨 위로 올려 기본 언어로 설정한 뒤 지역을 미국으로 바꾸고 SQL Developer를 킨 후 다시 언어 및 지역으로 들어가서 기본 언어를 한국어로 바꾸어서 SQL Developer가 한글로 나온다면 문제가 발생하지 않는다.
 
 - Mac에서 테스트
 
