@@ -5,7 +5,8 @@ TIL
 
 ### 1. git  
 
-> 1. [git](https://github.com/sis92345/TIL/blob/master/git/git.md)
+1. [git](https://github.com/sis92345/TIL/blob/master/git/git.md)
+2. [romote repository 데이터로 덮어쓰는 방법](https://github.com/sis92345/TIL/blob/master/git/gitOverwrite.md)
 
 ### 2. Java  
 > 1. [Interface](https://github.com/sis92345/TIL/blob/master/Java/Interface.md)
@@ -62,4 +63,5 @@ TIL
 3. [Signed Unsigned](https://github.com/sis92345/TIL/blob/master/ETC/Signed%20Unsigned.md)
 4. [톰캣 설치](https://github.com/sis92345/TIL/blob/master/ETC/Tomcat_install.md)
 5. [페이징 처리](https://github.com/sis92345/TIL/blob/master/Paging_Oracle_rownum/페이징%20처리.md)
-6. [Mac 개발환경 설정](https://github.com/sis92345/TIL/blob/master/ETC/Mac%20개발환경%20설정.md)
+
+[Mac 개발환경 설정](https://github.com/sis92345/TIL/blob/master/ETC/Mac%20개발환경%20설정.md)
