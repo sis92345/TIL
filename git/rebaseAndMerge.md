@@ -78,3 +78,33 @@ merge는 <u>현재브랜치</u>에서 [병합하고자하는 브랜치]의 <u>�
 
   <img width="760" alt="스크린샷 2021-10-17 오후 4 22 17" src="https://user-images.githubusercontent.com/68282095/137616752-a6cb9fb3-5d87-428f-b6b6-ee3bd013768b.png">
 
+- `git -c credential.helper= -c core.quotepath=false -c log.showSignature=false -c core.commentChar= rebase master`로 rebaseTest와 master 테이블을 rebase한 후 master로 체크아웃 한 후 fast-forword merge를 한 상황
+
+<img width="658" alt="스크린샷 2021-10-17 오후 4 41 34" src="https://user-images.githubusercontent.com/68282095/137617029-a47a6815-0a08-40bd-85f7-1b52da62e94b.png">
+
+### 커밋 히스토리를 통한 비교
+
+- Merge
+
+<img width="661" alt="스크린샷 2021-10-17 오후 4 46 06" src="https://user-images.githubusercontent.com/68282095/137617224-ffb1d361-2e92-4a7e-a65c-b20599e28670.png">
+
+- rebase
+
+  - rebase후 Fast forword merge를 하기 전
+
+    <img width="657" alt="스크린샷 2021-10-17 오후 4 52 31" src="https://user-images.githubusercontent.com/68282095/137617568-47ba9db6-97a2-4cb2-9721-79b07878299f.png">
+
+  - Fast forword merge를 한 후
+
+    <img width="656" alt="스크린샷 2021-10-17 오후 4 53 38" src="https://user-images.githubusercontent.com/68282095/137617579-ef3b43ab-6f62-463f-928a-2def8f1f93b7.png">
+
+### 📌 절대 remote 브랜치에 push된 브랜치에 rebase를 하지 않는다.
+
+rebase할 때 절대 하지 말아야 할 위험 요소가 있다.
+
+> **"Do not rebase commits that exist outside your repository and that people may have based work on."**
+> **"다른 동료가 작업 중인 외부에 공개 된 저장소 브랜치를 대상으로 리베이스하면 안됩니다."**
+
+rebase해서 생성된 커밋은 내용은 같지만 다른 커밋을 새로 만든다. 즉 a라는 사람이 feature 브랜치를 merge한 후 reset한 후 rebase한다면 중복된 커밋이 존재한다. 자세한 사항은 아래 링크를 참고
+
+https://git-scm.com/book/ko/v2/Git-브랜치-Rebase-하기
