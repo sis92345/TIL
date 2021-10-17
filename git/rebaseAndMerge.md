@@ -29,3 +29,7 @@ merge는 <u>현재브랜치</u>에서 [병합하고자하는 브랜치]의 <u>�
 <img width="874" alt="스크린샷 2021-10-17 오후 3 22 45" src="https://user-images.githubusercontent.com/68282095/137614375-1d402697-c431-4637-8101-e87210c13c29.png">
 
 - 위 상황에서 master 브랜치의 커밋이 없으므로 master와 dev를 merge하면 fast-forward merge가 진행된다
+
+  - Fast-forward merge가 진행된 예
+
+  <img width="659" alt="스크린샷 2021-10-17 오후 3 43 15" src="https://user-images.githubusercontent.com/68282095/137614988-73ea2507-ec51-446e-8407-80618149a55c.png">
