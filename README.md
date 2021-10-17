@@ -7,6 +7,7 @@ TIL
 
 1. [git](https://github.com/sis92345/TIL/blob/master/git/git.md)
 2. [romote repository 데이터로 덮어쓰는 방법](https://github.com/sis92345/TIL/blob/master/git/gitOverwrite.md)
+3. [merge와 rebase](https://github.com/sis92345/TIL/blob/master/git/rebaseAndMerge.md)
 
 ### 2. Java  
 > 1. [Interface](https://github.com/sis92345/TIL/blob/master/Java/Interface.md)
