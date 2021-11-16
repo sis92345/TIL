@@ -46,7 +46,7 @@ URL(Uniform resource locator)는 리소스의 구체적인 위치를 서술합�
 
 URL의 포멧은 다음과 같습니다.
 
-> scheme://<user>:<password>@<host>:<port>/<url-path>
+> `scheme://<user>:<password>@<host>:<port>/<url-path>`
 
 - scheme : 리소스에 접근하기 위해 사용되는 프로토콜 
   - `http://` , `https://`
