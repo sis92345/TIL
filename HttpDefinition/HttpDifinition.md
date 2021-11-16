@@ -2,6 +2,8 @@
 
 ## 1. HTTP 웹의 기초
 
+[HTTP 웹의 기초](https://github.com/sis92345/TIL/blob/master/HttpDefinition/01HttpBasic/HttpWebBasic.md)
+
 ## 2. HTTP  아키텍쳐
 
 ## 3. 식별 , 인가 , 보안
