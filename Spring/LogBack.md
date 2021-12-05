@@ -302,12 +302,12 @@ slf4jLogger.warn( "{} , {} , {} , {}" , list[0] , list[1] , list[2] , list[3]);
           </encoder>
       </appender>
   
-      <!-- FILE STDOUT -->
-      <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-          <file>${JAVA_STUDY_HOME}/logs/logFile.log</file>
+      <!-- 일반적인 FILE APPENDER -->
+      <appender name="GENERAL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+          <file>${JAVA_STUDY_HOME}/logs/${StopwatchName}/logFile.log</file>
           <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
               <!-- daily rollover -->
-              <fileNamePattern>stopwatchAspect_logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+              <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
   
               <!-- keep 30 days' worth of history capped at 3GB total size -->
               <maxHistory>3</maxHistory>
@@ -320,11 +320,39 @@ slf4jLogger.warn( "{} , {} , {} , {}" , list[0] , list[1] , list[2] , list[3]);
               <pattern>[ %-5level] [%d{HH:mm:ss.SSS}] at %C %X{StopwatchName} : StartTime[#%X{StartTime}] , TIME : %X{StopwatchTime} %X{TimeUnit}%n%n</pattern>
           </encoder>
       </appender>
+      <!-- SiftingAppender : Log를 discriminator별로 분리할 수 있다.-->
+      <appender name="SIFT_FILE" class="ch.qos.logback.classic.sift.SiftingAppender">
+          <!-- in the absence of the class attribute, it is assumed that the
+               desired discriminator type is
+               ch.qos.logback.classic.sift.MDCBasedDiscriminator -->
+          <discriminator>
+              <key>StopwatchName</key>
+              <defaultValue>default</defaultValue>
+          </discriminator>
+          <sift>
+              <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                  <file>${JAVA_STUDY_HOME}/logs/${StopwatchName}/logFile.log</file>
+                  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                      <!-- daily rollover -->
+                      <!-- Attempted to append to non started appender [FILE] : 다른 SIFT 파일이 동일한 fileNamePattern을 사용하고 있어서 오류-->
+                      <fileNamePattern>${StopwatchName}_logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+                      <!-- keep 30 days' worth of history capped at 3GB total size -->
+                      <maxHistory>3</maxHistory>
+                      <totalSizeCap>100MB</totalSizeCap>
+  
+                  </rollingPolicy>
+  
+                  <encoder>
+                      <pattern>[ %-5level] [%d{HH:mm:ss.SSS}] at %C %X{StopwatchName} : StartTime[#%X{StartTime}] , TIME : %X{StopwatchTime} %X{TimeUnit}%n%n</pattern>
+                  </encoder>
+              </appender>
+          </sift>
+      </appender>
   
       <!-- com.spring.stream LOG, 더블 log 방지를 위해 additivity를 false로 추가 -->
       <logger name="com.spring.stream" level="info" additivity="false">
           <appender-ref ref="STOPWATCH" />
-          <appender-ref ref="FILE" />
+          <appender-ref ref="SIFT_FILE" />
       </logger>
   
       <!-- ROOT에 APPENDER를 추가 -->
