@@ -52,7 +52,8 @@ TIL
 ### 7. Spring
 
 1. [DI](https://github.com/sis92345/TIL/blob/master/Spring/README.md)
-1. [LogBack](https://github.com/sis92345/TIL/blob/master/Spring/LogBack.md)
+1. [LogBack : Basic](https://github.com/sis92345/TIL/blob/master/Spring/LogBack.md)
+1. [LogBack : Appender](https://github.com/sis92345/TIL/blob/master/Spring/logback_appender.md)
 
 ### 8. Error Code
 
