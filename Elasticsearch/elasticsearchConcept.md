@@ -151,3 +151,4 @@ Primary Shards ( number_of_shards )마다 1개의 replica shards를 생성
 
 [Elasticsearch Basic Concept](https://stackoverflow.com/questions/27619370/shards-and-replicas-elastic-search)
 
+[Elasticsearch 7.0 type 미지원](https://www.elastic.co/kr/blog/moving-from-types-to-typeless-apis-in-elasticsearch-7-0)

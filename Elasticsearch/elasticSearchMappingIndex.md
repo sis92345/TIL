@@ -108,7 +108,7 @@ curl -XPUT 127.0.0.1:9200/movies -d '
   
     
 
-## 3. INSERT_BULK
+## 3. INSERT_BULKhttps://www.elastic.co/kr/blog/moving-from-types-to-typeless-apis-in-elasticsearch-7-0
 
 - Elasticsearch에서 데이터를 대량으로 Insert하는 방법이다.
 
