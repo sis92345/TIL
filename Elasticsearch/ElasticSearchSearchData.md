@@ -9,8 +9,8 @@
    ```
    {
      "query" : {
-       "match_phrase" : { 
-         "district" : "Kyonggi"
+       "match" : { 
+         "district" : "sci"
    		}
    	}
    }'
