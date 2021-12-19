@@ -54,6 +54,30 @@ curl -XPUT 127.0.0.1:9200/movies -d '
     - whitespace : 공백을 기준으로 분리
     - Language : 특정 단어를 stopword로 추가하거나 stemming 
 
+Mapping이 필요한 이유는 2가지 입니다.
+
+1. JSON Documents를 어떻게 저장할 것인가?
+   - Data Type
+   - Relations
+   - Shards Number
+   - Etc
+2. 정의된 Process에서 어떻게 실제 결과를 가져올 것인가?
+
+### 1-1. Daynamic / Explicit Mapping
+
+mapping 설정은 [Dynamic mapping](https://www.elastic.co/guide/en/elasticsearch/reference/master/dynamic-field-mapping.html) 과 [Explicit mapping](https://www.elastic.co/guide/en/elasticsearch/reference/master/explicit-mapping.html)이 있습니다. 
+
+- Daynamic Mapping
+  - Elasticsearch가 문서에서 새 필드를 감지하면 기본적으로 유형 매핑에 *동적으로* 필드를 추가합니다. 즉 Elasticsearch가 Field와 DataType을 자동으로 정의해서 생성된  Mapping입니다.
+- Explicit Mapping
+  - Field와 DataType을 만들어서 Index에 직접적으로 정의하는 것입니다.
+
+### 1-2. Mapping Explosion
+
+Index에 많은 Field를 정의하면  `Mapping Explosion`이 발생할 수 있습니다. Mapping Explosion이 발생하면 메모리가 부족하거나 복구가 어려워질 수 있습니다. Dynamic Mapping에서 이 문제가 발생할 수 있습니다. document가 insert될 때 새로운 Field를  Mapping하기 때문입니다. 
+
+Mapping Explosion을 방지하는 방법은 Mapping Limit 설정을 하는 방법이 있습니다. 또한 Flattern Data Type을 사용하면 Inner Object의 Field를 Mapping하지 않으므로 Mapping Explsion을 방지할 수 있습니다( 단 이 경우 Partial Search를 할 수 없음 )
+
 ## 2. INSERT
 
 - curl
@@ -662,6 +686,147 @@ Parent / Child relation에서 제한 사항이 있습니다.
 3. 자식은 여러개가 가능하지만 부모는 오직 하나로 제한됩니다. 
 
 Parent / Child를 사용하기 위해 선언했던 Join Field는 이름을 가집니다 : `{Join Field Name}#{부모이름}`
+
+## 9. Flattened Field DataType
+
+Elasticsearch에서 `Mapping`을 통해서 document가 어떻게 정의되고 document 내부에서 사용되는 field 정보를 저장하며 어떻게 저장되는지 , index 되는지 정의할 수 있습니다. 각 Document는 field의 모음이며 field는 data type을 가질 수 있습니다.  mapping 설정은 [Dynamic mapping](https://www.elastic.co/guide/en/elasticsearch/reference/master/dynamic-field-mapping.html) 과 [Explicit mapping](https://www.elastic.co/guide/en/elasticsearch/reference/master/explicit-mapping.html)이 있습니다.
+
+**Dynamic Mapping으로 매핑된 Inner Object의 field는 별도로 Mapping되고 Index됩니다.**
+
+```json
+// 아래 데이터를 index 생성과 동시에 insert 한다면...
+curl -H "Content-type: application/json" -XPUT "127.0.0.1:9200/demo-flattened/_doc/1" -d '
+{
+ "message" : "[5592:1:0309/123054.737712:ERROR:child_process_sandbox_support_impl_linux.cc(79)] FontService unique font name matching requset did not receive a response",
+ "fileset" : {
+  "name" : "syslog"
+ },
+ "process" : {
+  "name" : "org.gnome.Shell.desktop",
+  "pid"  : 3383
+ },
+ "@timestamp" : "2020-03-09T18:00:54.000_05:30",
+ "host" : {
+  "hostname" : "bionic",
+  "name"  : "bionic"
+ }
+}'
+```
+
+```json
+// host와 같은 Inner Object는 별도로 Mapping & Index 됩니다.
+{
+  "demo-default" : {
+    "mappings" : {
+      "properties" : {    
+        "host" : { // Inner Object인 Host의 하위 field는 별도로 Mapping
+          "properties" : {
+            "hostname" : {
+              "type" : "text",
+              "fields" : {
+                "keyword" : {
+                  "type" : "keyword",
+                  "ignore_above" : 256
+                }
+              }
+            },
+            "name" : {
+              "type" : "text",
+              "fields" : {
+                "keyword" : {
+                  "type" : "keyword",
+                  "ignore_above" : 256
+                }
+              }
+            }
+          }
+        },
+        "message" : {
+          "type" : "text",
+          "fields" : {
+            "keyword" : {
+              "type" : "keyword",
+              "ignore_above" : 256
+            }
+          }
+        }
+        /// ... 생략
+      }
+    }
+  }
+}
+```
+
+이때 `flattened` Data Type을 사용하면 Inner Field를 단일 Field로 Mapping할 수 있습니다. 객체가 주어지면 `flattened` 매핑은 leaf value 을 구문 분석하고 키워드로 하나의 필드에 인덱싱합니다. 그러면 간단한 쿼리와 집계를 통해 개체의 내용을 검색할 수 있습니다. 
+
+Flattern의 경우 Mapping Explosion을 방지하기 위해 사용될 수 있습니다. Dynamic Mapping에 제한 설정을 하지 않을 경우 모든 Field에 Mapping이 성능 문제가 복구 문제가 발생할 수 있습니다.
+
+```json
+// Mapping 설정
+curl -H "Content-type: application/json" -XPUT "127.0.0.1:9200/demo-flattened/_mapping" -d '
+{
+ "properties" : {
+  "host" : { "type"
+   : "flattened" }}}'
+// Mapping 정보
+{
+  "demo-flattened" : {
+    "mappings" : {
+      "properties" : {
+        "host" : {
+          "type" : "flattened"
+        },
+        "message" : {
+          "type" : "text",
+          "fields" : {
+            "keyword" : {
+              "type" : "keyword",
+              "ignore_above" : 256
+            }
+          }
+        },
+    }
+  }
+}
+```
+
+다만 Flattern로 선언할 경우 Inner Object의 Field는 Mapping이 되지 않으므로 analzing되지 않습니다. 따라서 Exact Search만 할 수 있습니다.
+
+```json
+// Inner Object의 Field는 .으로 접근할 수 있음
+// flattened된 경우 : 결과 X
+curl -H "Content-type: application/json" -XGET "http://localhost:9200/demo-flattened/_search?pretty" -d '
+{
+ "query" : {
+  "match" : {
+   "host.osVersion" : "Beaver"
+  }
+ }
+}'
+
+// Inner Object의 Field는 .으로 접근할 수 있음
+// flattened되고 정확한 검색을 할 경우 : 결과 O
+curl -H "Content-type: application/json" -XGET "http://localhost:9200/demo-flattened/_search?pretty" -d '
+{
+ "query" : {
+  "match" : {
+   "host.osVersion" : "Bionic Beaver"
+  }
+ }
+}'
+
+// Dynamic Mapping으로 생성될 경우(=== 기본 생성) Partial Search가 가능하다 : 결과 O
+curl -H "Content-type: application/json" -XGET "http://localhost:9200/demo-default/_search?pretty" -d '
+{
+ "query" : {
+  "match" : {
+   "host.osVersion" : "Beaver"
+  }
+ }
+}'
+```
+
+
 
 ## 99. 참고 자료
 
