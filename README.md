@@ -20,13 +20,15 @@ TIL
 7. [MVC](https://github.com/sis92345/TIL/blob/master/Java/MVC.md)
 8. [부스러기](https://github.com/sis92345/TIL/blob/master/Java/부스러기.md)
 
-### 3. Java Script
+### 3. JavaScript
 
 1. [JavaScript Overview](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptOverview.md)
 2. [JavaScript Object](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptObject.md)
 3. [Array & Object & Function](https://github.com/sis92345/TIL/blob/master/JavaScript/Array%26Object.md)
 4. [실행 컨텍스트](https://github.com/sis92345/TIL/blob/master/JavaScript/executionContext.md)
-
+// https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/0.TypeScript%20Intro.md
+#### 3-1. TypeScript
+1. [TypeScript Intro](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/0.TypeScript%20Intro.md)
 ### 4. Servlet/JSP
 
 1. [Servlet Basic](https://github.com/sis92345/TIL/blob/master/Servlet/Servlet.md)
