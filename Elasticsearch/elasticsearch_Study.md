@@ -1,0 +1,3 @@
+- Infographic 을 공부해서 Kibana를 이용하는게 좋다
+  - Kibana는 간단	
+- logStatsh를 봐야한다.
