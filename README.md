@@ -50,10 +50,10 @@ TIL
 1. [Ajax](https://github.com/sis92345/TIL/blob/master/Ajax/Ajax.md)
 
 ### 7. Spring
-1. [InversionOfControl] (https://github.com/sis92345/TIL/blob/master/Spring/00.Spring_Concept/00.InversionOfControl.md)
+1. [InversionOfControl](https://github.com/sis92345/TIL/blob/master/Spring/00.Spring_Concept/00.InversionOfControl.md)
 #### 7-1. LogBack
-2. [LogBack : Basic](https://github.com/sis92345/TIL/blob/master/Spring/LogBack.md)
-3. [LogBack : Appender](https://github.com/sis92345/TIL/blob/master/Spring/logback_appender.md)
+2. [LogBack : Basic](https://github.com/sis92345/TIL/blob/master/Spring/98.Spring_log/Logback.md)
+3. [LogBack : Appender](https://github.com/sis92345/TIL/blob/master/Spring/98.Spring_log/Logback_appender.md)
 #### 7-99. Spring_deprecated
 1. [Spring Old Doc] (https://github.com/sis92345/TIL/tree/master/Spring/Spring_Old)
 
