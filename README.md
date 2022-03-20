@@ -26,7 +26,6 @@ TIL
 2. [JavaScript Object](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptObject.md)
 3. [Array & Object & Function](https://github.com/sis92345/TIL/blob/master/JavaScript/Array%26Object.md)
 4. [실행 컨텍스트](https://github.com/sis92345/TIL/blob/master/JavaScript/executionContext.md)
-// https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/0.TypeScript%20Intro.md
 #### 3-1. TypeScript
 1. [TypeScript Intro](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/0.TypeScript%20Intro.md)
 ### 4. Servlet/JSP
