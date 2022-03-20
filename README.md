@@ -55,7 +55,7 @@ TIL
 2. [LogBack : Basic](https://github.com/sis92345/TIL/blob/master/Spring/98.Spring_log/Logback.md)
 3. [LogBack : Appender](https://github.com/sis92345/TIL/blob/master/Spring/98.Spring_log/Logback_appender.md)
 #### 7-99. Spring_deprecated
-1. [Spring Old Doc] (https://github.com/sis92345/TIL/tree/master/Spring/Spring_Old)
+1. [Spring Old Doc](https://github.com/sis92345/TIL/tree/master/Spring/Spring_Old)
 
 ### 8. Error Code
 
