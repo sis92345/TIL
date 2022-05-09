@@ -80,5 +80,5 @@ TIL
 3. [Signed Unsigned](https://github.com/sis92345/TIL/blob/master/ETC/Signed%20Unsigned.md)
 4. [톰캣 설치](https://github.com/sis92345/TIL/blob/master/ETC/Tomcat_install.md)
 5. [페이징 처리](https://github.com/sis92345/TIL/blob/master/Paging_Oracle_rownum/페이징%20처리.md)
-
-[Mac 개발환경 설정](https://github.com/sis92345/TIL/blob/master/ETC/Mac%20개발환경%20설정.md)
+6. [Mac 개발환경 설정](https://github.com/sis92345/TIL/blob/master/ETC/Mac%20개발환경%20설정.md)
+7. [일일회고](https://github.com/sis92345/TIL/tree/master/%EC%9D%BC%EC%9D%BC%ED%9A%8C%EA%B3%A0)
