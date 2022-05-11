@@ -82,3 +82,4 @@ TIL
 5. [페이징 처리](https://github.com/sis92345/TIL/blob/master/Paging_Oracle_rownum/페이징%20처리.md)
 6. [Mac 개발환경 설정](https://github.com/sis92345/TIL/blob/master/ETC/Mac%20개발환경%20설정.md)
 7. [일일회고](https://github.com/sis92345/TIL/tree/master/%EC%9D%BC%EC%9D%BC%ED%9A%8C%EA%B3%A0)
+8. [Docker를 활용한 centos 설치 및 redis 설치](https://github.com/sis92345/TIL/blob/master/ETC/Mac%20%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD%20%EC%84%A4%EC%A0%95%20-%20centos%20%EC%84%A4%EC%B9%98.md)
