@@ -4,7 +4,7 @@
 
 - 설치는 윈도우와 똑같다. `java -version` 을 터미널에서 입력했을때 오류가 난다면 자바를 설치한 후 환경 변수만 잡아주면 된다.
 
-- 환경 변수 설정 
+- 환경 변수 설정
 
   - Mac은 기본 shell로 zsh를 사용한다.
 
@@ -14,7 +14,7 @@
 
     - 따라서 vi 편집기로 환경변수를 등록할 필요가 있다.
 
-      1. 홈 최상위 디렉토리에 zsh 설정 파일을 설정	
+      1. 홈 최상위 디렉토리에 zsh 설정 파일을 설정
 
          ```
          vi ~/.zshrc	
@@ -65,7 +65,7 @@
   - homebrew와 관련된 명령어는 다음과 같다
 
     1. `brew update`: 홈브류를 업데이트 한다.
-    2. `brew update ${formulae}` : 해당 포뮬라를 업데이트한다. 
+    2. `brew update ${formulae}` : 해당 포뮬라를 업데이트한다.
 
   - 예 : `node.js` 설치
 
@@ -77,7 +77,7 @@
     brew install node
     ```
 
-    
+
 
 ### 3. zsh 설정
 
@@ -114,7 +114,7 @@
 
 - iterm2에서 한글이 깨지는 문제 해결
 
-  - 최초로 iterm2를 설치한 후 실행하면 한글이 깨져서 나온다. 이 문제가 발생하면 폰트를 바꿔주면 해결된다. 폰트는 네이버에서 나온 `D2Coding`을 추천한다. 
+  - 최초로 iterm2를 설치한 후 실행하면 한글이 깨져서 나온다. 이 문제가 발생하면 폰트를 바꿔주면 해결된다. 폰트는 네이버에서 나온 `D2Coding`을 추천한다.
   - 설정 방법
     - Iterm2 -> preperence -> profile -> text -> font에서 수정한다. 밑에 한글 자소 분리 문제때문에 Unicode normlization form을 `NFC`로 변경하는 것을 추천한다,
 
@@ -122,10 +122,10 @@
 
   `Window os` 와 `Mac os` 에서 유니코드를 처리하는 방식이 다르기 때문에 iterm2에서 한글 자소 분리 현상이 나타난다
 
-  - `Window os` : `NFC` 방식으로 처리 
-    - `NFD(Normalize Form C)` : 모든 음절을 Canonical Decomposition(정준 분해) 후 Canonical Composition(정준 결합)하는 방식 , 
+  - `Window os` : `NFC` 방식으로 처리
+    - `NFD(Normalize Form C)` : 모든 음절을 Canonical Decomposition(정준 분해) 후 Canonical Composition(정준 결합)하는 방식 ,
       - 예 )  `ㄱ` + `ㅏ` + `ㄱ` -> `각` ,  `각` 에 해당하는 코드 포인트를 저장한다.
-  - `Mac os` : `NFD` 방식으로 처리 
+  - `Mac os` : `NFD` 방식으로 처리
     - `NFD(Normalize Form D)` : 모든 음절을 Canonical Decomposition(정준 분해)하여 한글 자모 코드를 이용하여 저장하는 방식
       - 예 ) `각` -> `ㄱ` + `ㅏ` + `ㄱ` , 즉 3개의 코드 포인트를 저장한다.
 
@@ -157,9 +157,9 @@
     ### Prompt components# Each component will draw itself, and hide itself if no information needs to be shown# Context: user@hostname (who am I and where am I)## Ver.Default : 기본 설정#prompt_context() {#  if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then#    prompt_segment black default "%(!.%{%F{yellow}%}.)%n@%m"#  fi#}## Ver.NotShowName : 이름을 안보이고 싶을 때#prompt_context() {#  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then#    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"#  fi#}## Ver.Emoji : 랜덤 이모지prompt_context() {  emojis=("⚡️" "🔥" "🐱" "👑" "😎" "💻" "🍎" "🦄" "🌈" "🇰 🇷 " "🚀" "💡" "🎉" "🔑" "🚦" "🌙")  RAND_EMOJI_N=$(( $RANDOM % ${#emojis[@]} + 1))  prompt_segment black default "ted ${emojis[$RAND_EMOJI_N]} "}
     ```
 
-    
 
-- terminal new line 적용 
+
+- terminal new line 적용
 
   - 코드가 창을 넘어갈 때 newline을 생성하는 명령어
 
@@ -205,7 +205,7 @@
 
 - **단 M1칩을 사용하는 Mac에서는 docker를 사용하는 방법조차 안된다.☹** 쉽게 말해서 M1 칩에서는 oracle을 설치해서 사용할 수 없다 ㅋ
 
-- 그런데 오히려 좋을 수 있는게 직접 설치할 수 없으므로 기존의 방법이 아닌 다른 방법을 사용해야 하므로 다른 공부를 할 수 있다는 점이 있다. 
+- 그런데 오히려 좋을 수 있는게 직접 설치할 수 없으므로 기존의 방법이 아닌 다른 방법을 사용해야 하므로 다른 공부를 할 수 있다는 점이 있다.
 
 - M1칩 Mac에서 oracle database를 사용하는 방법은 크게 다음 3가지가 있다.
 
@@ -241,7 +241,7 @@
 
 - Mac SQL Developer 처음 설치 시 `locale not recoginized`  오류 문제
 
-  - SQL Developer를 맥에서 처음 사용할 시 locale을 인식하지 못하는 문제가 발생한다. 
+  - SQL Developer를 맥에서 처음 사용할 시 locale을 인식하지 못하는 문제가 발생한다.
   - 해당 오류가 뜨지 않더라도 언어 및 지역을 한국어 , 대한민국으로 설정했는데 SQL Developer가 영어로 뜬다면 locale을 인식하지 못한 문제이다.
   - 이 오류는 http://taewan.kim/tip/sqldeveloper_error_unrecog_locale/ 를 참고하면 된다.
   - 만약 나처럼 해당 오류는 안떳지만 SQL Developer가 영어로 뜬다면 (언어 설정이 영어라면 문제 X) 시스템 환경설정 -> 언어 및 지역 -> 영어를 추가한 후 맨 위로 올려 기본 언어로 설정한 뒤 지역을 미국으로 바꾸고 SQL Developer를 킨 후 다시 언어 및 지역으로 들어가서 기본 언어를 한국어로 바꾸어서 SQL Developer가 한글로 나온다면 문제가 발생하지 않는다.

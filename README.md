@@ -16,9 +16,10 @@ TIL
 3. [Literal & Variable & Constant](https://github.com/sis92345/TIL/blob/master/Java/literal%20%26%20variable.md)
 4. [Casting](https://github.com/sis92345/TIL/blob/master/Java/Casting.md)
 5. [Array](https://github.com/sis92345/TIL/blob/master/Java/Array.md#1-배열의-개념)
-6. [JDBC](https://github.com/sis92345/TIL/blob/master/Java/JDBC.md)
-7. [MVC](https://github.com/sis92345/TIL/blob/master/Java/MVC.md)
-8. [부스러기](https://github.com/sis92345/TIL/blob/master/Java/부스러기.md)
+6. [JVM](https://github.com/sis92345/TIL/blob/master/Java/JVM.md)
+7. [JDBC](https://github.com/sis92345/TIL/blob/master/Java/JDBC.md)
+8. [MVC](https://github.com/sis92345/TIL/blob/master/Java/MVC.md)
+9. [부스러기](https://github.com/sis92345/TIL/blob/master/Java/부스러기.md)
 
 ### 3. JavaScript
 
@@ -26,6 +27,7 @@ TIL
 2. [JavaScript Object](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptObject.md)
 3. [Array & Object & Function](https://github.com/sis92345/TIL/blob/master/JavaScript/Array%26Object.md)
 4. [실행 컨텍스트](https://github.com/sis92345/TIL/blob/master/JavaScript/executionContext.md)
+4. [호이스팅](https://github.com/sis92345/TIL/blob/master/JavaScript/Hoisting.md)
 #### 3-1. TypeScript
 1. [TypeScript Intro](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/0.TypeScript%20Intro.md)
 ### 4. Servlet/JSP
@@ -78,5 +80,5 @@ TIL
 3. [Signed Unsigned](https://github.com/sis92345/TIL/blob/master/ETC/Signed%20Unsigned.md)
 4. [톰캣 설치](https://github.com/sis92345/TIL/blob/master/ETC/Tomcat_install.md)
 5. [페이징 처리](https://github.com/sis92345/TIL/blob/master/Paging_Oracle_rownum/페이징%20처리.md)
-
-[Mac 개발환경 설정](https://github.com/sis92345/TIL/blob/master/ETC/Mac%20개발환경%20설정.md)
+6. [Mac 개발환경 설정](https://github.com/sis92345/TIL/blob/master/ETC/Mac%20개발환경%20설정.md)
+7. [일일회고](https://github.com/sis92345/TIL/tree/master/%EC%9D%BC%EC%9D%BC%ED%9A%8C%EA%B3%A0)
