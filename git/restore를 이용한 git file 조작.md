@@ -14,10 +14,6 @@
    git restore <pathspec>
    ```
 
-   새로운 파일이라면 index에서 복구하므로 실제로 변화는 없다.
-
-   <img width="513" alt="스크린샷 2022-05-13 오전 12 37 46" src="https://user-images.githubusercontent.com/68282095/168114192-95d560bb-6b01-4490-b56b-6fe9f5d39f1b.png">
-
 2. stage된 파일을 HEAD Commit으로 복구한다.
 
    ```shell
