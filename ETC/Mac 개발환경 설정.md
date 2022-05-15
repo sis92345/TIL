@@ -181,6 +181,16 @@
 
   - 사용 가능한 명령어에 highlight를 넣어주는 기능이다.
 
+- alias 등록
+
+  - 리눅스/유닉스에서 긴 명령어를 짦게 사용할 수 있도록 별칭 명령어를 사용할 수 있다.
+  
+  - 개인 문서로 바로 이동하도록 alias를 등록하자. 이때 alias는 기존에 사용하는 명령과 동일하면 안된다.
+  
+    ```shell
+    alias andoc="cd ~/Documents"
+    ```
+  
 - 최종 적용
 
   <img width="747" alt="최종적용" src="https://user-images.githubusercontent.com/68282095/134105377-092aa2fa-8e8e-4a19-951d-a3d1536ac0a9.png">
