@@ -10,6 +10,7 @@ TIL
 3. [merge와 rebase](https://github.com/sis92345/TIL/blob/master/git/rebaseAndMerge.md)
 4. [git에서 스냅샷으로 들어가보기](https://github.com/sis92345/TIL/blob/master/git/gitSnapShot.md)
 5. [restore를 이용한 git file 조작](https://github.com/sis92345/TIL/blob/master/git/restore%EB%A5%BC%20%EC%9D%B4%EC%9A%A9%ED%95%9C%20git%20file%20%EC%A1%B0%EC%9E%91.md)
+6. [git config](https://github.com/sis92345/TIL/blob/master/git/git%20config.md)
 ### 2. Java  
 1. [Interface](https://github.com/sis92345/TIL/blob/master/Java/Interface.md)
 2. [Innerclass](https://github.com/sis92345/TIL/blob/master/Java/Inner%20class.md)
