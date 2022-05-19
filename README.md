@@ -31,6 +31,7 @@ TIL
 4. [호이스팅](https://github.com/sis92345/TIL/blob/master/JavaScript/Hoisting.md)
 #### 3-1. TypeScript
 1. [TypeScript Intro](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/0.TypeScript%20Intro.md)
+2. [TypeScript - Function](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/1.TypeScript_Function.md)
 ### 4. Servlet/JSP
 
 1. [Servlet Basic](https://github.com/sis92345/TIL/blob/master/Servlet/Servlet.md)
