@@ -65,6 +65,7 @@ TIL
 
 1. [sql : Mapped Statements collection does not contain value for ~ ](https://github.com/sis92345/TIL/blob/master/ErrorCode/MappedStatement.md)
 2. [git : permission denied 403](https://github.com/sis92345/TIL/blob/master/ErrorCode/gitPermissionDenied.md)
+3. [JavaScript 객체 순환 참조로 인한 JSON 변환 오류](https://github.com/sis92345/TIL/blob/master/ErrorCode/javascript_%EA%B0%9D%EC%B2%B4_%EC%88%9C%ED%99%98_%EC%B0%B8%EC%A1%B0.md)
 
 ### 9. Elasticsearch Stack
 
