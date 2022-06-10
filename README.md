@@ -28,8 +28,9 @@ TIL
 2. [JavaScript Object](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptObject.md)
 3. [Array & Object & Function](https://github.com/sis92345/TIL/blob/master/JavaScript/Array%26Object.md)
 4. [실행 컨텍스트](https://github.com/sis92345/TIL/blob/master/JavaScript/executionContext.md)
-4. [호이스팅](https://github.com/sis92345/TIL/blob/master/JavaScript/Hoisting.md)
-5. [NVM](https://github.com/sis92345/TIL/blob/master/JavaScript/nvm.md)
+5. [호이스팅](https://github.com/sis92345/TIL/blob/master/JavaScript/Hoisting.md)
+6. [NVM](https://github.com/sis92345/TIL/blob/master/JavaScript/nvm.md)
+7. [JEST 기본 설정](https://github.com/sis92345/TIL/blob/master/JavaScript/JEST.md)
 #### 3-1. TypeScript
 1. [TypeScript Intro](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/0.TypeScript%20Intro.md)
 2. [TypeScript - Function](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/1.TypeScript_Function.md)

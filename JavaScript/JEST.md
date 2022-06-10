@@ -14,7 +14,7 @@
 
 Nuxt와 함께 사용할 시 반드시 설정해야 하는 설정입니다.
 
-```json
+```javascript
 module.exports = {
   // 리소스나 모듈 위치 path alias와 매핑할 수 있도록 지정
   moduleNameMapper: {
