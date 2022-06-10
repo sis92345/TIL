@@ -113,12 +113,11 @@ module.exports = async () => {
 
 ```javascript
 // 1. 테스트 용 IMPORT
-import NoteBlockSetBLO from "~/components/site/gwnote/note/editor/NoteBlockSetBLO";
-import share_note_edit from "~/pages/gwnote/note/share_note_edit";
+import NoteBlockSetBLO from "~/TestBLO.js";
+import share_note_edit from "~/test_page";
 
 // 2. 테스트 모듈 세팅
 import { mount, shallowMount , createLocalVue } from "@vue/test-utils";
-import ui from "~/plugins/core/ui"
 import axios from 'axios';
 import Vuex from 'vuex'
 import Element from 'element-ui'
@@ -148,7 +147,7 @@ const mockInjector = function( key , value ) {
 beforeEach( async () => {
 
   // 1. $store 주입
-  const storePath = `/Users/anbyeonghyeon/Documents/00.repositoy/gwedu_gwnote/site/gwnote/.nuxt/store.js`
+  const storePath = `testStore.js`
   NuxtStore = await import(storePath);
   $store = await NuxtStore.createStore();
   $axios = axios;
@@ -172,7 +171,7 @@ describe( "VUE INSTANCE 등록 테스트" , () =>{
 
   test( "TEST" , () => {
 
-    const wrapper = shallowMount( share_note_edit , {
+    const wrapper = shallowMount( test_page , {
       localVue,
       mocks: {
         $store,
