@@ -211,6 +211,61 @@ describe( "VUE INSTANCE 등록 테스트" , () =>{
 # 5. TEST
 
 ```javascript
+describe( "POLLING TEST" , ()=>{
+
+  /**
+   * 폴링 테스트
+   * */
+  test( "POLLING이 잘 되는지 테스트" , async () => {
+
+    jest.useFakeTimers();
+    const mockFunc = jest.fn();
+
+    polling( mockFunc , 1000 );
+
+    // 테스트를 위한 SET_UP
+    for (let i = 0; i < 6; i++) {
+      jest.advanceTimersByTime(1000);
+      await Promise.resolve();
+    }
+
+    expect(mockFunc).toHaveBeenCalledTimes(6)
+
+  })
+})
+
+/**
+ * polling 처리를 진행한다.
+ *
+ * @param {*} func - Polling으로 실행할 콜백
+ * @param {int} timeout - setTimeOut을 줄 max
+ * @param {int} maxAttempts - 최초 실행 기간
+ * */
+function polling( func , timeout, maxAttempts = -1 ) {
+
+    if ( 0 === maxAttempts ) {
+        return;
+    }
+
+    setTimeout( async ()=>{
+
+      try {
+          await func();
+      }
+      catch ( e ) {
+          console.error( e );
+      }
+
+      // POLLING 설정
+      polling( func , timeout , maxAttempts );
+
+    } , timeout);
+}
+```
+
+
+
+```javascript
 describe( "유저 분할 테스트" , () => {
 
   test( "배열이 원하는 사이즈 만큼 청크로 나눌 수 있는지 검증한다." , () => {
