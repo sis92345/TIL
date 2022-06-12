@@ -28,8 +28,9 @@ TIL
 2. [JavaScript Object](https://github.com/sis92345/TIL/blob/master/JavaScript/JavaScriptObject.md)
 3. [Array & Object & Function](https://github.com/sis92345/TIL/blob/master/JavaScript/Array%26Object.md)
 4. [실행 컨텍스트](https://github.com/sis92345/TIL/blob/master/JavaScript/executionContext.md)
-4. [호이스팅](https://github.com/sis92345/TIL/blob/master/JavaScript/Hoisting.md)
-5. [NVM](https://github.com/sis92345/TIL/blob/master/JavaScript/nvm.md)
+5. [호이스팅](https://github.com/sis92345/TIL/blob/master/JavaScript/Hoisting.md)
+6. [NVM](https://github.com/sis92345/TIL/blob/master/JavaScript/nvm.md)
+7. [JEST 기본 설정](https://github.com/sis92345/TIL/blob/master/JavaScript/JEST.md)
 #### 3-1. TypeScript
 1. [TypeScript Intro](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/0.TypeScript%20Intro.md)
 2. [TypeScript - Function](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/1.TypeScript_Function.md)
@@ -65,6 +66,7 @@ TIL
 
 1. [sql : Mapped Statements collection does not contain value for ~ ](https://github.com/sis92345/TIL/blob/master/ErrorCode/MappedStatement.md)
 2. [git : permission denied 403](https://github.com/sis92345/TIL/blob/master/ErrorCode/gitPermissionDenied.md)
+3. [JavaScript 객체 순환 참조로 인한 JSON 변환 오류](https://github.com/sis92345/TIL/blob/master/ErrorCode/javascript_%EA%B0%9D%EC%B2%B4_%EC%88%9C%ED%99%98_%EC%B0%B8%EC%A1%B0.md)
 
 ### 9. Elasticsearch Stack
 
