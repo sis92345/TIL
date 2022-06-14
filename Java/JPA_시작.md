@@ -236,4 +236,3 @@ public class SimpleJpaRepository<T, ID> implements JpaRepositoryImplementation<T
                 }
         }
 ```
-
