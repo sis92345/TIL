@@ -31,6 +31,7 @@ TIL
 5. [호이스팅](https://github.com/sis92345/TIL/blob/master/JavaScript/Hoisting.md)
 6. [NVM](https://github.com/sis92345/TIL/blob/master/JavaScript/nvm.md)
 7. [JEST 기본 설정](https://github.com/sis92345/TIL/blob/master/JavaScript/JEST.md)
+8. [Ajax](https://github.com/sis92345/TIL/blob/master/Ajax/Ajax.md)
 #### 3-1. TypeScript
 1. [TypeScript Intro](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/0.TypeScript%20Intro.md)
 2. [TypeScript - Function](https://github.com/sis92345/TIL/blob/master/JavaScript/TypeScript/1.TypeScript_Function.md)
@@ -50,35 +51,31 @@ TIL
 4. [Constraint](https://github.com/sis92345/TIL/blob/master/Sql/Constraint.md)
 5. [Sql Object](https://github.com/sis92345/TIL/blob/master/Sql/SqlObject.md)
 
-### 6. Ajax
-
-1. [Ajax](https://github.com/sis92345/TIL/blob/master/Ajax/Ajax.md)
-
-### 7. Spring
+### 6. Spring
 1. [InversionOfControl](https://github.com/sis92345/TIL/blob/master/Spring/00.Spring_Concept/00.InversionOfControl.md)
-#### 7-1. LogBack
+#### 6-1. LogBack
 2. [LogBack : Basic](https://github.com/sis92345/TIL/blob/master/Spring/98.Spring_log/Logback.md)
 3. [LogBack : Appender](https://github.com/sis92345/TIL/blob/master/Spring/98.Spring_log/Logback_appender.md)
-#### 7-99. Spring_deprecated
+#### 6-99. Spring_deprecated
 1. [Spring Old Doc](https://github.com/sis92345/TIL/tree/master/Spring/Spring_Old)
 
-### 8. Error Code
+### 7. Error Code
 
 1. [sql : Mapped Statements collection does not contain value for ~ ](https://github.com/sis92345/TIL/blob/master/ErrorCode/MappedStatement.md)
 2. [git : permission denied 403](https://github.com/sis92345/TIL/blob/master/ErrorCode/gitPermissionDenied.md)
 3. [JavaScript 객체 순환 참조로 인한 JSON 변환 오류](https://github.com/sis92345/TIL/blob/master/ErrorCode/javascript_%EA%B0%9D%EC%B2%B4_%EC%88%9C%ED%99%98_%EC%B0%B8%EC%A1%B0.md)
 
-### 9. Elasticsearch Stack
+### 8. Elasticsearch Stack
 
 1. [Elasticsearch Intro & Configuration](https://github.com/sis92345/TIL/blob/master/Elasticsearch/elesticsearch.md)
 2. [Elasticsearch Concpet](https://github.com/sis92345/TIL/blob/master/Elasticsearch/elasticsearchConcept.md)
 3. [Elasticsearch : Mapping Index ( Elasticsearch CRUD )](https://github.com/sis92345/TIL/blob/master/Elasticsearch/elasticSearchMappingIndex.md)
 
-### 10. HTTP 완벽 가이드
+### 9. HTTP 완벽 가이드
 
 1. [HTTP 완벽 가이드 - 공사중 ](https://github.com/sis92345/TIL/blob/master/HttpDefinition/HttpDifinition.md)
 
-### 11. ETC
+### 10. ETC
 
 1. [자바에서 문자열을 파싱하는 3가지 방법](https://github.com/sis92345/TIL/blob/master/ETC/ParsingInJava.md)
 2. [값 복사와 주소 복사](https://github.com/sis92345/TIL/blob/master/ETC/Copy.md)
