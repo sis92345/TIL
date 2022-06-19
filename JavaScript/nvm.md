@@ -2,7 +2,7 @@
 
 최근 회사와 토이프로젝트에서 사용하는 노드 버전이 달라서 nvm으로 사용해야 겠다는 결심이 들어서 이번에 nvm 관련 정보를 정리한다. 회사에서 사용하는 node 버전에 v14였고, 토이 프로젝트에서 v16을 사용해야 했다. 
 
-# NVM 명령어
+# MAC 에서 NVM 설치
 
 1. brew에서 설치
 
@@ -92,7 +92,22 @@
    v16.15.1
    ```
 
-   
+# NVM 명령어
+
+### nvm ls
+로컬에 설치된 node의 목록을 가져온다.
+```shell
+  nvm ls
+```
+
+### nvm ls-remote
+remote에서 설치 가능한 node 목록
+   - option
+     - node version ( `nvm ls-remote 16` ): node vesion 16 중 설치 가능한 목록을 가져옵니다.
+     - `--lts` ( `nvm ls-remote 16 --lts` ): 최신 버전을 가져옵니다.
+```shell
+   nvm ls-remote <node version> <-- lts>
+```
 
 # 관련 문서
 
