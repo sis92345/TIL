@@ -1,9 +1,6 @@
 EL(Expression Language)
 ==========
-
 > EL 개요
-
-
 
 > EL의 표현
 >
