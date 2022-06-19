@@ -105,7 +105,7 @@ remote에서 설치 가능한 node 목록
    - option
      - node version ( `nvm ls-remote 16` ): node vesion 16 중 설치 가능한 목록을 가져옵니다.
      - `--lts` ( `nvm ls-remote 16 --lts` ): 최신 버전을 가져옵니다.
-     - 
+   
 ```shell
    nvm ls-remote <node version> <-- lts>
 ```
