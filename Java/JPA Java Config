@@ -1,0 +1,106 @@
+# JPA : Java Config
+
+package com.jpa.config;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
+import org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.PlatformTransactionManager;
+
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+@Configuration
+public class DBConfig {
+      
+      /**
+       * HikariConfig : dataSource와 Connection Pool 관련 설정
+       * */
+      @Primary
+      @Bean
+      public HikariConfig hikariConfig() {
+            
+            HikariConfig hikariConfig = new HikariConfig();
+            
+            hikariConfig.setJdbcUrl( "jdbc:mysql://127.0.0.1:3306/world" );
+            hikariConfig.setUsername( "DEV" );
+            hikariConfig.setPassword( "1q2w3e4r" );
+            hikariConfig.setDriverClassName( "com.mysql.cj.jdbc.Driver" );
+            
+            // MinumumIdle : 일하지 않는 Connection을 유지하는 설정
+            hikariConfig.setMinimumIdle( 1 );
+            
+            // IdleTimeOut : 일하지 않는 Connection Pool을 유지하는 시간
+            hikariConfig.setIdleTimeout( 10000 );
+            
+            // ConnectionTimeout : Connection을 가져오기 위해 기다리는 시간 Timout 되면 SqlException을 던짐
+            hikariConfig.setConnectionTimeout( 200000 );
+            
+            // MaximumPoolSize : Connection Pool에 유지할 Connection의 수 -> 현재 Pool Size가 10 이라면 idle 상태인 pool은 없음
+            hikariConfig.setMaximumPoolSize( 10 );
+            
+            return hikariConfig;
+      }
+      
+      /**
+       * DataSource
+       * */
+      @Bean
+      public DataSource dataSource(){
+            
+            return new HikariDataSource( hikariConfig() );
+      }
+      
+      /** JPA 관련 BEAN 등록 */
+      @Bean
+      public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+            return new PersistenceExceptionTranslationPostProcessor();
+      }
+      
+      @Bean
+      public PlatformTransactionManager transactionManager() {
+            JpaTransactionManager transactionManager = new JpaTransactionManager();
+            transactionManager.setEntityManagerFactory( entityManagerFactory().getObject() );
+            
+            return transactionManager;
+      }
+      
+      /** JPA ENTITY MANAGER FACTORY BEAN 등록*/
+      
+      @Bean
+      public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+            
+            LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+            
+            em.setDataSource( dataSource() );
+            em.setPackagesToScan( new String[] { "com.jpa" } );
+            
+            JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+            em.setJpaVendorAdapter( vendorAdapter );
+            em.setJpaProperties( additionalProperties() );
+            return em;
+      }
+      
+      private Properties additionalProperties() {
+            Properties props = new Properties();
+            
+            props.setProperty("hibernate.format_sql", "true");
+            props.setProperty("hibernate.show_sql", "true");
+            
+            return props;
+      }
+}
