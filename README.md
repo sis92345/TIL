@@ -1,7 +1,7 @@
 TIL 
 ==========
 ## Today I Learned
-> 배운 것을 정리하는 TIL repositiry입니다.
+> 배운 것을 정리하는 TIL Repositiry입니다.
 
 ### 1. git  
 
