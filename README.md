@@ -20,7 +20,8 @@ TIL
 6. [JVM](https://github.com/sis92345/TIL/blob/master/Java/JVM.md)
 7. [JDBC](https://github.com/sis92345/TIL/blob/master/Java/JDBC.md)
 8. [MVC](https://github.com/sis92345/TIL/blob/master/Java/MVC.md)
-9. [부스러기](https://github.com/sis92345/TIL/blob/master/Java/부스러기.md)
+9. [자바의 정석](https://github.com/sis92345/TIL/tree/master/Java/javamaster)
+10. [부스러기](https://github.com/sis92345/TIL/blob/master/Java/부스러기.md)
 
 ### 3. JavaScript
 
