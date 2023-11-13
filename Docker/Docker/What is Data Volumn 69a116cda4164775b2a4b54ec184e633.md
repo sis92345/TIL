@@ -51,3 +51,28 @@ Volumns은 모두 로컬호스트의 폴더를 컨테이너에 마운트한다.
 마찬가지로 Docker가 관리한다.
 
 </aside>
+
+# Bind Mounts
+
+<aside>
+📢 호스트 머신의 파일 시스템 경로를 컨테이너 내부의 경로와 연결할 수 있는 저장소이다.
+
+</aside>
+
+Docker에서 사용하는 두 외부 저장소 중 하나인 Bind Mounts는 Volumn을 대신해서 사용할 수 있는 외부 저장소이다. **바인드 마운트는 호스트 머신의 폴더나 path를 직접 설정**하기 때문에 볼륨과 다르게 바인드 마운트의 소스 코드 수정 변경을 반영할 수 있다.
+
+Docker Image는 폴더의 스냅샷이기 때문에 지금까지의 방식으로는 코드의 수정을 바로 반영할 수 없다. 따라서 우리는 소스 코드의 변경을 위해 이미지를 다시 빌드해야 한다.
+
+따라서 Bind Mounts는 영구적이고 편집 가능한 데이터를 보관하는데 적합하다( Source Code )
+
+## Bind Mount의 사용
+
+<aside>
+📢 -v “${hostMachineFolder/Path}:${Container Targer Folder/volume}”
+-v "/Users/anbyeonghyeon/bindmountFolder:/app/feedback”
+
+</aside>
+
+실제 로딩 후 화면
+
+![Untitled](What%20is%20Data%20Volumn%2069a116cda4164775b2a4b54ec184e633/Untitled%202.png)

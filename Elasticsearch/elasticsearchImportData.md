@@ -62,7 +62,7 @@ Logstash는 형식이나 복잡성과 관계 없이 데이터를 동적으로 �
      // /opt/homebrew/Cellar/logstash-full/7.16.2/libexec/config/myconf.conf
      input {
           file {
-            path => '/Users/anbyeonghyeon/Documents/00.repositoy/javaStudy/ logs/flatMap_Test/*.log'
+            path => '/Users/asdasd/Documents/00.repositoy/javaStudy/ logs/flatMap_Test/*.log'
           }
         }
    
@@ -85,10 +85,10 @@ Logstash는 형식이나 복잡성과 관계 없이 데이터를 동적으로 �
 
    ```
    {
-             "host" => "anbyeonghyeon-ui-MacBookPro.local",
+             "host" => "asdasd-ui-MacBookPro.local",
          "@version" => "1",
           "message" => "[ INFO ] [21:20:04.686] at com.spring.common.aspect.StopwatchAspect flatMap_Test : StartTime[#2021-12-11T21:20:04.686] , TIME : 0 MILLISECONDS",
-             "path" => "/Users/anbyeonghyeon/Documents/00.repositoy/javaStudy/logs/flatMap_Test/log.log",
+             "path" => "/Users/asdasd/Documents/00.repositoy/javaStudy/logs/flatMap_Test/log.log",
        "@timestamp" => 2021-12-26T10:22:11.251Z
    }
    ```
